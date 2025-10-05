@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mahesh Babu Pentapati — Portfolio</title>
+  <meta name="description" content="SOC Analyst — FortiSIEM, FortiSOAR, Detection Engineering, Threat Hunting" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { darkMode: 'class' };
+    (function(){try{const t=localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'); if(t==='dark') document.documentElement.classList.add('dark');}catch(e){}})();
+  </script>
+  <style>
+    .grid-bg{position:fixed;inset:0;pointer-events:none;z-index:-20;-webkit-mask-image:radial-gradient(transparent,black 70%);mask-image:radial-gradient(transparent,black 70%);
+      background-image:repeating-linear-gradient(0deg, rgba(120,120,120,0.06) 0px, rgba(120,120,120,0.06) 1px, transparent 1px, transparent 80px),
+                       repeating-linear-gradient(90deg, rgba(120,120,120,0.06) 0px, rgba(120,120,120,0.06) 1px, transparent 1px, transparent 80px);
+      background-size:80px 80px,80px 80px;}
+    .circuit{position:fixed;inset:0;pointer-events:none;opacity:.10;z-index:-10}.dark .circuit{opacity:.12}
+    #progress{position:fixed;top:0;left:0;height:4px;width:0;z-index:50}
+    @keyframes floaty{from{transform:translateY(-6px)}to{transform:translateY(6px)}} .floaty{animation:floaty 3s ease-in-out infinite alternate}
+  </style>
+</head>
+<body class="min-h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 antialiased">
+  <div id="progress" class="bg-zinc-900/80 dark:bg-zinc-100/90"></div>
+  <div class="grid-bg"></div>
+  <div class="fixed inset-0 -z-30 overflow-hidden pointer-events-none">
+    <div class="absolute -top-40 -left-40 h-[42rem] w-[42rem] rounded-full blur-3xl opacity-30 bg-gradient-to-br from-indigo-500 via-cyan-400 to-emerald-400 dark:opacity-20"></div>
+    <div class="absolute top-1/3 -right-40 h-[36rem] w-[36rem] rounded-full blur-3xl opacity-25 bg-gradient-to-br from-rose-400 via-fuchsia-400 to-indigo-400 dark:opacity-15"></div>
+    <div class="absolute bottom-0 left-1/4 h-[28rem] w-[28rem] rounded-full blur-3xl opacity-25 bg-gradient-to-br from-amber-300 via-lime-300 to-emerald-300 dark:opacity-15"></div>
+  </div>
+  <svg class="circuit" viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <defs><linearGradient id="glow" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#60a5fa"/><stop offset="100%" stop-color="#34d399"/></linearGradient></defs>
+    <g>
+      <script type="application/ecmascript"><![CDATA[
+        (function(){const g=document.currentScript.parentNode;for(let i=0;i<40;i++){const p=document.createElementNS('http://www.w3.org/2000/svg','path');const cx=(i*30)%1200,cy=(i*18)%800;p.setAttribute('d',`M${cx} ${cy} h70 v30 h40 v30`);p.setAttribute('stroke','url(#glow)');p.setAttribute('stroke-width','1');p.setAttribute('fill','none');g.appendChild(p);const c=document.createElementNS('http://www.w3.org/2000/svg','circle');c.setAttribute('cx',(cx+70)%1200);c.setAttribute('cy',cy);c.setAttribute('r','2');c.setAttribute('fill','#22d3ee');g.appendChild(c);}})();
+      ]]></script>
+    </g>
+  </svg>
+
+  <header class="sticky top-0 z-40 border-b border-zinc-200/70 dark:border-zinc-800/70 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:supports-[backdrop-filter]:bg-zinc-950/40">
+    <div class="mx-auto max-w-6xl px-5 py-3 flex items-center justify-between gap-3">
+      <a href="#about" class="font-bold text-lg tracking-tight">MB</a>
+      <nav class="hidden md:flex items-center gap-1">
+        <a href="#about" class="px-3 py-1.5 rounded-full text-sm hover:bg-zinc-100 dark:hover:bg-zinc-800/70">About</a>
+        <a href="#cyber" class="px-3 py-1.5 rounded-full text-sm hover:bg-zinc-100 dark:hover:bg-zinc-800/70">Cyber Focus</a>
+        <a href="#experience" class="px-3 py-1.5 rounded-full text-sm hover:bg-zinc-100 dark:hover:bg-zinc-800/70">Experience</a>
+        <a href="#projects" class="px-3 py-1.5 rounded-full text-sm hover:bg-zinc-100 dark:hover:bg-zinc-800/70">Projects</a>
+        <a href="#skills" class="px-3 py-1.5 rounded-full text-sm hover:bg-zinc-100 dark:hover:bg-zinc-800/70">Skills</a>
+        <a href="#certs" class="px-3 py-1.5 rounded-full text-sm hover:bg-zinc-100 dark:hover:bg-zinc-800/70">Certifications</a>
+        <a href="#contact" class="px-3 py-1.5 rounded-full text-sm hover:bg-zinc-100 dark:hover:bg-zinc-800/70">Contact</a>
+      </nav>
+      <button id="themeToggle" class="p-2 rounded hover:bg-zinc-100 dark:hover:bg-zinc-800/70" aria-label="Toggle theme"><span id="sun" class="hidden">☀️</span><span id="moon">🌙</span></button>
+    </div>
+  </header>
+
+  <main>
+    <section id="about" class="scroll-mt-24 py-14 sm:py-20">
+      <div class="mx-auto max-w-6xl px-5 grid md:grid-cols-5 gap-6 items-center">
+        <div class="md:col-span-3">
+          <div class="inline-flex items-center gap-2 rounded-full border border-zinc-300/70 dark:border-zinc-700/70 px-3 py-1 text-xs mb-3"><span>🛡️</span><span>Defensive Security • Detection Engineering</span></div>
+          <h1 class="text-2xl sm:text-3xl font-bold tracking-tight mb-2">Mahesh Babu Pentapati</h1>
+          <h2 class="text-lg sm:text-xl font-medium text-zinc-600 dark:text-zinc-300">SOC Analyst • FortiSIEM / FortiSOAR • Threat Hunting & Log Parsing</h2>
+          <p class="mt-4 text-zinc-700 dark:text-zinc-300">Cybersecurity professional focused on SOC operations, SIEM/SOAR engineering, and threat hunting. I build precise detections, robust parsers, and pragmatic automations.</p>
+          <div class="mt-6 flex flex-wrap gap-3">
+            <a href="mailto:maheshbabu.soc7@gmail.com" class="inline-flex items-center gap-2 rounded-xl px-4 py-2 border border-zinc-300 dark:border-zinc-700 hover:shadow-lg">✉️ Email</a>
+            <a href="tel:+917670866926" class="inline-flex items-center gap-2 rounded-xl px-4 py-2 border border-zinc-300 dark:border-zinc-700">📞 Call</a>
+            <a href="assets/resume.pdf" download class="inline-flex items-center gap-2 rounded-xl px-4 py-2 border border-zinc-300 dark:border-zinc-700 hover:shadow-lg">⬇️ Download Résumé</a>
+          </div>
+        </div>
+        <div class="md:col-span-2 relative">
+          <div class="absolute -inset-1 rounded-3xl blur-2xl opacity-40 bg-gradient-to-tr from-indigo-500 via-emerald-500 to-cyan-400"></div>
+          <div class="relative aspect-square rounded-3xl bg-gradient-to-br from-zinc-100 to-zinc-50 dark:from-zinc-900 dark:to-zinc-950 border border-zinc-200 dark:border-zinc-800 overflow-hidden">
+            <img src="assets/profile.jpg" alt="Mahesh Babu Pentapati" class="w-full h-full object-cover" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="cyber" class="scroll-mt-24 py-14 sm:py-20">
+      <div class="mx-auto max-w-6xl px-5">
+        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mb-6">Cyber Focus</h2>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div class="rounded-2xl border border-zinc-200 dark:border-zinc-800 p-6 bg-white/70 dark:bg-zinc-900/60">
+            <h3 class="text-lg font-semibold">Detection Engineering</h3>
+            <p class="mt-2 text-sm text-zinc-700 dark:text-zinc-300">Build precise SIEM rules & parsers (FortiSIEM/QRadar/Splunk). Emphasis on fidelity, aggregation windows, and anti-evasion regex.</p>
+            <div class="mt-3 flex gap-2 flex-wrap"><span class="px-3 py-1 rounded-full border text-sm">ATT&CK TTPs</span><span class="px-3 py-1 rounded-full border text-sm">Noise Control</span><span class="px-3 py-1 rounded-full border text-sm">Coverage</span></div>
+          </div>
+          <div class="rounded-2xl border border-zinc-200 dark:border-zinc-800 p-6 bg-white/70 dark:bg-zinc-900/60">
+            <h3 class="text-lg font-semibold">Incident Response</h3>
+            <p class="mt-2 text-sm text-zinc-700 dark:text-zinc-300">Rapid scoping with pivoting (process, network, identity). Playbooks for phishing, ransomware, lateral movement.</p>
+            <div class="mt-3 flex gap-2 flex-wrap"><span class="px-3 py-1 rounded-full border text-sm">Triage</span><span class="px-3 py-1 rounded-full border text-sm">Hunt</span><span class="px-3 py-1 rounded-full border text-sm">IR Playbooks</span></div>
+          </div>
+          <div class="rounded-2xl border border-zinc-200 dark:border-zinc-800 p-6 bg-white/70 dark:bg-zinc-900/60">
+            <h3 class="text-lg font-semibold">Adversary Emulation</h3>
+            <p class="mt-2 text-sm text-zinc-700 dark:text-zinc-300">Safe simulations to validate detections (PowerShell/PsExec/MSHTA/Ngrok scenarios) mapped to ATT&CK.</p>
+            <div class="mt-3 flex gap-2 flex-wrap"><span class="px-3 py-1 rounded-full border text-sm">Atomic Red Team</span><span class="px-3 py-1 rounded-full border text-sm">Caldera</span></div>
+          </div>
+          <div class="rounded-2xl border border-zinc-200 dark:border-zinc-800 p-6 bg-white/70 dark:bg-zinc-900/60">
+            <h3 class="text-lg font-semibold">SIEM Engineering</h3>
+            <p class="mt-2 text-sm text-zinc-700 dark:text-zinc-300">Normalization, enrichment, and dashboards for exec reporting and SOC ops.</p>
+            <div class="mt-3 flex gap-2 flex-wrap"><span class="px-3 py-1 rounded-full border text-sm">Data Models</span><span class="px-3 py-1 rounded-full border text-sm">Dashboards</span></div>
+          </div>
+          <div class="rounded-2xl border border-zinc-200 dark:border-zinc-800 p-6 bg-white/70 dark:bg-zinc-900/60">
+            <h3 class="text-lg font-semibold">Threat Intel & Enrichment</h3>
+            <p class="mt-2 text-sm text-zinc-700 dark:text-zinc-300">Automated lookups and risk scoring to boost investigation speed.</p>
+            <div class="mt-3 flex gap-2 flex-wrap"><span class="px-3 py-1 rounded-full border text-sm">AbuseIPDB</span><span class="px-3 py-1 rounded-full border text-sm">VT</span></div>
+          </div>
+          <div class="rounded-2xl border border-zinc-200 dark:border-zinc-800 p-6 bg-white/70 dark:bg-zinc-900/60">
+            <h3 class="text-lg font-semibold">Compliance & Reporting</h3>
+            <p class="mt-2 text-sm text-zinc-700 dark:text-zinc-300">Evidence-ready summaries, retention posture, and alert hygiene.</p>
+            <div class="mt-3 flex gap-2 flex-wrap"><span class="px-3 py-1 rounded-full border text-sm">RBI</span><span class="px-3 py-1 rounded-full border text-sm">Audits</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience" class="scroll-mt-24 py-14 sm:py-20">
+      <div class="mx-auto max-w-6xl px-5">
+        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mb-6">Experience</h2>
+        <div class="space-y-4">
+          <div class="rounded-2xl border border-zinc-200 dark:border-zinc-800 p-6 bg-white/70 dark:bg-zinc-900/60">
+            <div class="flex flex-wrap items-center justify-between gap-3"><h3 class="text-lg font-semibold">SOC Analyst — TechOwl</h3><div class="text-sm text-zinc-600 dark:text-zinc-400">Jun 2025 — Present</div></div>
+            <div class="text-sm mt-1 text-zinc-600 dark:text-zinc-400">Surat, Gujarat, India (On-site)</div>
+            <ul class="mt-3 list-disc pl-5 text-sm text-zinc-700 dark:text-zinc-300 space-y-1">
+              <li>CTH, FortiSIEM engineering, SIEM/SOAR implementations</li>
+              <li>Detections, parsers, automations for BFSI</li>
+              <li>Detection fidelity, exec dashboards</li>
+            </ul>
+          </div>
+          <div class="rounded-2xl border border-zinc-200 dark:border-zinc-800 p-6 bg-white/70 dark:bg-zinc-900/60">
+            <div class="flex flex-wrap items-center justify-between gap-3"><h3 class="text-lg font-semibold">SOC Analyst — Mastercard</h3><div class="text-sm text-zinc-600 dark:text-zinc-400">Sep 2022 — Jun 2025</div></div>
+            <div class="text-sm mt-1 text-zinc-600 dark:text-zinc-400">Pune, Maharashtra, India</div>
+            <ul class="mt-3 list-disc pl-5 text-sm text-zinc-700 dark:text-zinc-300 space-y-1">
+              <li>QRadar-based monitoring, detection, response</li>
+              <li>Correlation tuning to cut false positives</li>
+              <li>Global SOC hunts & IR exercises</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="scroll-mt-24 py-14 sm:py-20">
+      <div class="mx-auto max-w-6xl px-5">
+        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mb-6">Selected Projects</h2>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div class="rounded-2xl border border-zinc-200 dark:border-zinc-800 p-6 bg-white/70 dark:bg-zinc-900/60"><h3 class="text-lg font-semibold">SQL Injection Detection Suite</h3><p class="mt-2 text-sm text-zinc-700 dark:text-zinc-300">Regex-based categories for time-based, boolean, and obfuscated payloads with noise reduction and coverage controls.</p><div class="mt-3 flex gap-2 flex-wrap"><span class="px-3 py-1 rounded-full border text-sm">FortiSIEM</span><span class="px-3 py-1 rounded-full border text-sm">Regex</span><span class="px-3 py-1 rounded-full border text-sm">ATT&CK</span></div></div>
+          <div class="rounded-2xl border border-zinc-200 dark:border-zinc-800 p-6 bg-white/70 dark:bg-zinc-900/60"><h3 class="text-lg font-semibold">Windows DNS Flow Analytics (256/257/260/261)</h3><p class="mt-2 text-sm text-zinc-700 dark:text-zinc-300">Correlates query/response pairs to flag pointer loops, suspicious NXDOMAIN bursts, and potential exfiltration.</p><div class="mt-3 flex gap-2 flex-wrap"><span class="px-3 py-1 rounded-full border text-sm">Windows DNS</span><span class="px-3 py-1 rounded-full border text-sm">Analytics</span><span class="px-3 py-1 rounded-full border text-sm">Hunting</span></div></div>
+          <div class="rounded-2xl border border-zinc-200 dark:border-zinc-800 p-6 bg-white/70 dark:bg-zinc-900/60"><h3 class="text-lg font-semibold">Trend Vision One Telemetry Normalization</h3><p class="mt-2 text-sm text-zinc-700 dark:text-zinc-300">Unified SIEM schema for consistent detections & dashboards.</p><div class="mt-3 flex gap-2 flex-wrap"><span class="px-3 py-1 rounded-full border text-sm">TV1</span><span class="px-3 py-1 rounded-full border text-sm">Mapping</span><span class="px-3 py-1 rounded-full border text-sm">Dashboards</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" class="scroll-mt-24 py-14 sm:py-20">
+      <div class="mx-auto max-w-6xl px-5">
+        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mb-6">Skills</h2>
+        <div class="flex flex-wrap gap-2">
+          <span class="px-3 py-1 rounded-full border text-sm">Threat Hunting</span>
+          <span class="px-3 py-1 rounded-full border text-sm">Incident Response</span>
+          <span class="px-3 py-1 rounded-full border text-sm">FortiSIEM</span>
+          <span class="px-3 py-1 rounded-full border text-sm">FortiSOAR</span>
+          <span class="px-3 py-1 rounded-full border text-sm">QRadar</span>
+          <span class="px-3 py-1 rounded-full border text-sm">Splunk</span>
+          <span class="px-3 py-1 rounded-full border text-sm">MITRE ATT&CK</span>
+          <span class="px-3 py-1 rounded-full border text-sm">Linux</span>
+          <span class="px-3 py-1 rounded-full border text-sm">Packet Analysis</span>
+          <span class="px-3 py-1 rounded-full border text-sm">Python</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="certs" class="scroll-mt-24 py-14 sm:py-20">
+      <div class="mx-auto max-w-6xl px-5">
+        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mb-6">Certifications</h2>
+        <div class="grid sm:grid-cols-2 gap-5">
+          <div class="rounded-2xl border border-zinc-200 dark:border-zinc-800 p-6 bg-white/70 dark:bg-zinc-900/60"><h3 class="text-lg font-semibold">Fortinet Certified Associate in Cybersecurity</h3><p class="mt-2 text-sm text-zinc-700 dark:text-zinc-300">Issued Jul 2025 • Expires Jul 2027 • ID: 2072677544MP</p></div>
+          <div class="rounded-2xl border border-zinc-200 dark:border-zinc-800 p-6 bg-white/70 dark:bg-zinc-900/60"><h3 class="text-lg font-semibold">NSE Level 1: Certified Associate</h3><p class="mt-2 text-sm text-zinc-700 dark:text-zinc-300">Issued Jul 2025</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="scroll-mt-24 py-14 sm:py-20">
+      <div class="mx-auto max-w-6xl px-5 grid md:grid-cols-2 gap-6 items-start">
+        <div class="space-y-3">
+          <a href="mailto:maheshbabu.soc7@gmail.com" class="inline-flex items-center gap-2 p-3 rounded-xl border border-zinc-300 dark:border-zinc-700 w-full">✉️ maheshbabu.soc7@gmail.com</a>
+          <a href="tel:+917670866926" class="inline-flex items-center gap-2 p-3 rounded-xl border border-zinc-300 dark:border-zinc-700 w-full">📞 +91 7670866926</a>
+          <a href="https://www.linkedin.com/in/mahesh-babu-pentapati-soc" target="_blank" class="inline-flex items-center gap-2 p-3 rounded-xl border border-zinc-300 dark:border-zinc-700 w-full">🔗 LinkedIn</a>
+          <a href="https://github.com/maheshpentapati" target="_blank" class="inline-flex items-center gap-2 p-3 rounded-xl border border-zinc-300 dark:border-zinc-700 w-full">💻 GitHub</a>
+        </div>
+        <form onsubmit="event.preventDefault(); const fd=new FormData(this); const name=fd.get('name'); const email=fd.get('email'); const msg=fd.get('message'); location.href=`mailto:maheshbabu.soc7@gmail.com?subject=Portfolio%20contact%20from%20${encodeURIComponent(name||'')}&body=${encodeURIComponent(msg||'')}%0A%0AFrom:%20${encodeURIComponent(email||'')}`;" class="rounded-2xl border border-zinc-200 dark:border-zinc-800 p-6 bg-white/70 dark:bg-zinc-900/60">
+          <div class="grid gap-4">
+            <div><label class="block text-sm mb-1">Name</label><input name="name" required class="w-full rounded-xl border border-zinc-300 dark:border-zinc-700 bg-transparent px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" /></div>
+            <div><label class="block text-sm mb-1">Email</label><input name="email" type="email" required class="w-full rounded-xl border border-zinc-300 dark:border-zinc-700 bg-transparent px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" /></div>
+            <div><label class="block text-sm mb-1">Message</label><textarea name="message" rows="5" required class="w-full rounded-xl border border-zinc-300 dark:border-zinc-700 bg-transparent px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea></div>
+            <button class="inline-flex items-center gap-2 justify-center rounded-xl px-4 py-2 border border-zinc-300 dark:border-zinc-700 hover:shadow-lg">Send ↗</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="py-10 border-t border-zinc-200 dark:border-zinc-800 text-sm">
+    <div class="mx-auto max-w-6xl px-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p>© <span id="year"></span> Mahesh Babu Pentapati. Built with ❤</p>
+      <div class="flex items-center gap-3 opacity-80">
+        <a href="https://www.linkedin.com/in/mahesh-babu-pentapati-soc" target="_blank" class="underline-offset-4 hover:underline">LinkedIn</a>
+        <a href="https://github.com/maheshpentapati" target="_blank" class="underline-offset-4 hover:underline">GitHub</a>
+        <a href="assets/resume.pdf" download class="underline-offset-4 hover:underline">Résumé</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const btn=document.getElementById('themeToggle'), sun=document.getElementById('sun'), moon=document.getElementById('moon');
+    btn.addEventListener('click', ()=>{const isDark=document.documentElement.classList.toggle('dark'); localStorage.setItem('theme', isDark?'dark':'light'); sun.classList.toggle('hidden', !isDark); moon.classList.toggle('hidden', isDark);});
+    const prog=document.getElementById('progress'); window.addEventListener('scroll', ()=>{const s=scrollY, h=document.body.scrollHeight-innerHeight; const w=Math.max(0, Math.min(1, h? s/h : 0))*100; prog.style.width=w+'%';},{passive:true});
+  </script>
+</body>
+</html>
