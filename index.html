@@ -1,220 +1,921 @@
 <!doctype html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Mahesh Babu Pentapati — Portfolio</title>
+  <title>Mahesh Babu Pentapati — SOC Analyst & Detection Engineer</title>
   <meta name="description" content="SOC Analyst — FortiSIEM, FortiSOAR, Detection Engineering, Threat Hunting" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = { darkMode: 'class' };
-    (function(){try{const t=localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'); if(t==='dark') document.documentElement.classList.add('dark');}catch(e){}})();
-  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    .grid-bg{position:fixed;inset:0;pointer-events:none;z-index:-20;-webkit-mask-image:radial-gradient(transparent,black 70%);mask-image:radial-gradient(transparent,black 70%);
-      background-image:repeating-linear-gradient(0deg, rgba(120,120,120,0.06) 0px, rgba(120,120,120,0.06) 1px, transparent 1px, transparent 80px),
-                       repeating-linear-gradient(90deg, rgba(120,120,120,0.06) 0px, rgba(120,120,120,0.06) 1px, transparent 1px, transparent 80px);
-      background-size:80px 80px,80px 80px;}
-    .circuit{position:fixed;inset:0;pointer-events:none;opacity:.10;z-index:-10}.dark .circuit{opacity:.12}
-    #progress{position:fixed;top:0;left:0;height:4px;width:0;z-index:50}
-    @keyframes floaty{from{transform:translateY(-6px)}to{transform:translateY(6px)}} .floaty{animation:floaty 3s ease-in-out infinite alternate}
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg-primary: #0a0a0f;
+      --bg-secondary: #0f0f18;
+      --bg-card: rgba(15, 15, 24, 0.7);
+      --bg-card-hover: rgba(20, 20, 35, 0.9);
+      --text-primary: #e8e8f0;
+      --text-secondary: #8888a8;
+      --text-muted: #55556a;
+      --accent: #00e5a0;
+      --accent-dim: rgba(0, 229, 160, 0.15);
+      --accent-glow: rgba(0, 229, 160, 0.4);
+      --accent-blue: #3b82f6;
+      --accent-cyan: #06b6d4;
+      --border: rgba(255, 255, 255, 0.06);
+      --border-hover: rgba(0, 229, 160, 0.25);
+      --font-display: 'Outfit', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-body: 'Outfit', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--accent) var(--bg-primary); }
+    body { font-family: var(--font-body); background: var(--bg-primary); color: var(--text-primary); overflow-x: hidden; line-height: 1.6; }
+
+    ::selection { background: var(--accent); color: var(--bg-primary); }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-primary); }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+
+    /* ── Scanline overlay ── */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
+    }
+
+    /* ── Canvas bg ── */
+    #matrixCanvas { position: fixed; inset: 0; z-index: -10; opacity: 0.06; }
+
+    /* ── Grid overlay ── */
+    .grid-overlay {
+      position: fixed; inset: 0; z-index: -5; pointer-events: none;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, black 30%, transparent 80%);
+    }
+
+    /* ── Glow blobs ── */
+    .glow-blob {
+      position: fixed; border-radius: 50%; filter: blur(100px); pointer-events: none; z-index: -8;
+    }
+    .glow-blob-1 { top: -10%; left: -5%; width: 500px; height: 500px; background: rgba(0, 229, 160, 0.08); animation: drift1 20s ease-in-out infinite; }
+    .glow-blob-2 { top: 40%; right: -10%; width: 400px; height: 400px; background: rgba(59, 130, 246, 0.06); animation: drift2 25s ease-in-out infinite; }
+    .glow-blob-3 { bottom: -5%; left: 30%; width: 350px; height: 350px; background: rgba(6, 182, 212, 0.06); animation: drift3 22s ease-in-out infinite; }
+    @keyframes drift1 { 0%,100% { transform: translate(0, 0); } 50% { transform: translate(40px, 30px); } }
+    @keyframes drift2 { 0%,100% { transform: translate(0, 0); } 50% { transform: translate(-30px, -40px); } }
+    @keyframes drift3 { 0%,100% { transform: translate(0, 0); } 50% { transform: translate(20px, -20px); } }
+
+    /* ── Progress bar ── */
+    #progress { position: fixed; top: 0; left: 0; height: 2px; width: 0; z-index: 100; background: linear-gradient(90deg, var(--accent), var(--accent-cyan)); box-shadow: 0 0 10px var(--accent-glow); }
+
+    /* ── Header ── */
+    header {
+      position: sticky; top: 0; z-index: 50;
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(20px) saturate(1.4);
+      background: rgba(10, 10, 15, 0.75);
+    }
+    .header-inner { max-width: 1100px; margin: 0 auto; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-family: var(--font-mono); font-weight: 700; font-size: 18px; letter-spacing: -0.5px; color: var(--accent); text-decoration: none; }
+    .logo span { color: var(--text-muted); }
+    nav { display: flex; gap: 4px; }
+    nav a {
+      font-family: var(--font-mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px;
+      color: var(--text-secondary); text-decoration: none;
+      padding: 6px 14px; border-radius: 6px; transition: all 0.25s;
+    }
+    nav a:hover { color: var(--accent); background: var(--accent-dim); }
+
+    /* ── Sections ── */
+    section { padding: 100px 24px; position: relative; }
+    .container { max-width: 1100px; margin: 0 auto; }
+
+    /* ── Reveal animation ── */
+    .reveal {
+      opacity: 0; transform: translateY(40px);
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+    .reveal-delay-5 { transition-delay: 0.5s; }
+
+    /* ── Hero ── */
+    .hero { min-height: 90vh; display: flex; align-items: center; padding-top: 60px; }
+    .hero-grid { display: grid; grid-template-columns: 1fr 380px; gap: 60px; align-items: center; }
+    .status-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--font-mono); font-size: 12px; letter-spacing: 1px; text-transform: uppercase;
+      color: var(--accent); padding: 8px 16px;
+      border: 1px solid rgba(0, 229, 160, 0.2); border-radius: 100px;
+      background: rgba(0, 229, 160, 0.05); margin-bottom: 24px;
+    }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: pulse-dot 2s ease-in-out infinite; }
+    @keyframes pulse-dot { 0%,100% { box-shadow: 0 0 0 0 var(--accent-glow); } 50% { box-shadow: 0 0 0 8px transparent; } }
+    .hero h1 {
+      font-family: var(--font-display); font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800;
+      line-height: 1.05; letter-spacing: -2px; margin-bottom: 8px;
+    }
+    .hero h1 .accent { color: var(--accent); }
+    .hero-role {
+      font-family: var(--font-mono); font-size: 16px; color: var(--text-secondary);
+      margin-bottom: 20px; letter-spacing: -0.3px;
+    }
+    .hero-desc { font-size: 17px; color: var(--text-secondary); line-height: 1.7; max-width: 520px; margin-bottom: 32px; }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.3px;
+      padding: 12px 24px; border-radius: 10px; text-decoration: none;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); cursor: pointer; border: none;
+    }
+    .btn-primary {
+      background: var(--accent); color: var(--bg-primary); font-weight: 600;
+      box-shadow: 0 0 20px rgba(0, 229, 160, 0.2);
+    }
+    .btn-primary:hover { box-shadow: 0 0 40px rgba(0, 229, 160, 0.35); transform: translateY(-2px); }
+    .btn-ghost {
+      background: transparent; color: var(--text-primary);
+      border: 1px solid var(--border);
+    }
+    .btn-ghost:hover { border-color: var(--border-hover); background: var(--accent-dim); }
+
+    /* ── Profile visual ── */
+    .profile-visual { position: relative; }
+    .profile-frame {
+      position: relative; width: 100%; aspect-ratio: 1;
+      border-radius: 24px; overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--bg-secondary);
+    }
+    .profile-frame img { width: 100%; height: 100%; object-fit: cover; }
+    .profile-frame::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, transparent 60%, rgba(0, 229, 160, 0.1));
+    }
+    .profile-glow {
+      position: absolute; top: -20px; left: -20px; right: -20px; bottom: -20px;
+      border-radius: 34px; z-index: -1;
+      background: conic-gradient(from 180deg, var(--accent-glow), transparent, var(--accent-blue), transparent, var(--accent-glow));
+      animation: rotate-glow 8s linear infinite;
+      opacity: 0.3; filter: blur(20px);
+    }
+    @keyframes rotate-glow { to { transform: rotate(360deg); } }
+
+    /* ── Terminal stats ── */
+    .terminal-stats {
+      position: absolute; bottom: -30px; left: -30px; right: 30px;
+      background: rgba(10, 10, 15, 0.9); border: 1px solid var(--border);
+      border-radius: 12px; padding: 16px 20px;
+      font-family: var(--font-mono); font-size: 12px;
+      backdrop-filter: blur(10px);
+    }
+    .terminal-stats .line { margin-bottom: 4px; }
+    .terminal-stats .prompt { color: var(--accent); }
+    .terminal-stats .cmd { color: var(--text-primary); }
+    .terminal-stats .output { color: var(--text-secondary); }
+
+    /* ── Section headers ── */
+    .section-label {
+      font-family: var(--font-mono); font-size: 12px; text-transform: uppercase;
+      letter-spacing: 2px; color: var(--accent); margin-bottom: 12px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .section-label::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
+    .section-title {
+      font-family: var(--font-display); font-size: clamp(2rem, 3.5vw, 2.8rem);
+      font-weight: 700; letter-spacing: -1.5px; margin-bottom: 48px;
+    }
+
+    /* ── Focus cards ── */
+    .focus-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .focus-card {
+      padding: 32px 28px; border-radius: 16px;
+      border: 1px solid var(--border); background: var(--bg-card);
+      backdrop-filter: blur(10px);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative; overflow: hidden;
+    }
+    .focus-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: 0; transition: opacity 0.4s;
+    }
+    .focus-card:hover { border-color: var(--border-hover); background: var(--bg-card-hover); transform: translateY(-4px); }
+    .focus-card:hover::before { opacity: 1; }
+    .focus-icon {
+      width: 44px; height: 44px; border-radius: 10px;
+      background: var(--accent-dim); display: flex; align-items: center; justify-content: center;
+      font-size: 20px; margin-bottom: 20px;
+    }
+    .focus-card h3 { font-family: var(--font-display); font-size: 18px; font-weight: 600; margin-bottom: 10px; }
+    .focus-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.65; margin-bottom: 16px; }
+    .tags { display: flex; gap: 6px; flex-wrap: wrap; }
+    .tag {
+      font-family: var(--font-mono); font-size: 11px;
+      padding: 4px 10px; border-radius: 6px;
+      background: rgba(255, 255, 255, 0.04); border: 1px solid var(--border);
+      color: var(--text-secondary);
+    }
+
+    /* ── Timeline ── */
+    .timeline { position: relative; padding-left: 40px; }
+    .timeline::before {
+      content: ''; position: absolute; left: 14px; top: 0; bottom: 0;
+      width: 1px; background: linear-gradient(to bottom, var(--accent), var(--border), transparent);
+    }
+    .timeline-item { position: relative; margin-bottom: 32px; }
+    .timeline-dot {
+      position: absolute; left: -33px; top: 24px;
+      width: 12px; height: 12px; border-radius: 50%;
+      border: 2px solid var(--accent); background: var(--bg-primary);
+    }
+    .timeline-item.current .timeline-dot { background: var(--accent); box-shadow: 0 0 12px var(--accent-glow); }
+    .timeline-card {
+      padding: 28px 32px; border-radius: 16px;
+      border: 1px solid var(--border); background: var(--bg-card);
+      backdrop-filter: blur(10px);
+      transition: all 0.3s;
+    }
+    .timeline-card:hover { border-color: var(--border-hover); }
+    .timeline-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px; margin-bottom: 4px; }
+    .timeline-card h3 { font-family: var(--font-display); font-size: 20px; font-weight: 600; }
+    .timeline-date {
+      font-family: var(--font-mono); font-size: 12px; color: var(--accent);
+      padding: 4px 12px; border-radius: 100px;
+      background: var(--accent-dim); white-space: nowrap;
+    }
+    .timeline-location { font-family: var(--font-mono); font-size: 13px; color: var(--text-muted); margin-bottom: 14px; }
+    .timeline-card ul { list-style: none; }
+    .timeline-card li {
+      font-size: 14px; color: var(--text-secondary); padding: 4px 0; padding-left: 18px;
+      position: relative; line-height: 1.6;
+    }
+    .timeline-card li::before { content: '›'; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+
+    /* ── Project cards ── */
+    .projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .project-card {
+      padding: 32px 28px; border-radius: 16px;
+      border: 1px solid var(--border); background: var(--bg-card);
+      backdrop-filter: blur(10px);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative; overflow: hidden;
+      display: flex; flex-direction: column;
+    }
+    .project-card:hover { border-color: var(--border-hover); transform: translateY(-4px); }
+    .project-num {
+      font-family: var(--font-mono); font-size: 48px; font-weight: 700;
+      color: rgba(0, 229, 160, 0.08); position: absolute; top: 12px; right: 20px;
+      line-height: 1;
+    }
+    .project-card h3 { font-family: var(--font-display); font-size: 18px; font-weight: 600; margin-bottom: 10px; position: relative; }
+    .project-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.65; margin-bottom: 16px; flex: 1; }
+
+    /* ── Skills ── */
+    .skills-container { display: flex; flex-direction: column; gap: 24px; }
+    .skill-row {
+      display: flex; align-items: center; gap: 16px;
+    }
+    .skill-category {
+      font-family: var(--font-mono); font-size: 12px; text-transform: uppercase;
+      letter-spacing: 1px; color: var(--text-muted); width: 120px; flex-shrink: 0;
+      text-align: right;
+    }
+    .skill-items { display: flex; gap: 8px; flex-wrap: wrap; }
+    .skill-tag {
+      font-family: var(--font-mono); font-size: 13px;
+      padding: 8px 16px; border-radius: 8px;
+      background: var(--bg-card); border: 1px solid var(--border);
+      color: var(--text-primary);
+      transition: all 0.3s;
+    }
+    .skill-tag:hover { border-color: var(--border-hover); background: var(--accent-dim); color: var(--accent); transform: translateY(-2px); }
+
+    /* ── Certs ── */
+    .certs-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .cert-card {
+      padding: 28px; border-radius: 16px;
+      border: 1px solid var(--border); background: var(--bg-card);
+      backdrop-filter: blur(10px);
+      display: flex; gap: 20px; align-items: flex-start;
+      transition: all 0.3s;
+    }
+    .cert-card:hover { border-color: var(--border-hover); }
+    .cert-badge {
+      width: 52px; height: 52px; border-radius: 12px; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--accent-dim), rgba(59, 130, 246, 0.1));
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-mono); font-weight: 700; font-size: 14px; color: var(--accent);
+    }
+    .cert-card h3 { font-family: var(--font-display); font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+    .cert-card p { font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); }
+
+    /* ── Contact ── */
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+    .contact-links { display: flex; flex-direction: column; gap: 12px; }
+    .contact-link {
+      display: flex; align-items: center; gap: 14px;
+      padding: 18px 24px; border-radius: 12px;
+      border: 1px solid var(--border); background: var(--bg-card);
+      text-decoration: none; color: var(--text-primary);
+      font-family: var(--font-mono); font-size: 14px;
+      transition: all 0.3s;
+    }
+    .contact-link:hover { border-color: var(--border-hover); background: var(--accent-dim); }
+    .contact-link .icon { font-size: 18px; }
+    .contact-form {
+      padding: 32px; border-radius: 16px;
+      border: 1px solid var(--border); background: var(--bg-card);
+      backdrop-filter: blur(10px);
+    }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-family: var(--font-mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); margin-bottom: 8px; }
+    .form-group input, .form-group textarea {
+      width: 100%; padding: 12px 16px; border-radius: 10px;
+      border: 1px solid var(--border); background: rgba(255,255,255,0.03);
+      color: var(--text-primary); font-family: var(--font-body); font-size: 14px;
+      outline: none; transition: border-color 0.3s;
+    }
+    .form-group input:focus, .form-group textarea:focus { border-color: var(--accent); }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 24px;
+    }
+    .footer-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; justify-content: space-between; align-items: center;
+      font-family: var(--font-mono); font-size: 12px; color: var(--text-muted);
+    }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a { color: var(--text-secondary); text-decoration: none; transition: color 0.3s; }
+    .footer-links a:hover { color: var(--accent); }
+
+    /* ── Typing animation ── */
+    .typewriter { overflow: hidden; white-space: nowrap; border-right: 2px solid var(--accent); animation: blink-caret 0.75s step-end infinite; display: inline-block; }
+    @keyframes blink-caret { from, to { border-color: transparent; } 50% { border-color: var(--accent); } }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+      .profile-visual { max-width: 300px; margin: 0 auto; }
+      .focus-grid, .projects-grid { grid-template-columns: 1fr; }
+      .certs-grid { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; }
+      nav { display: none; }
+      .skill-row { flex-direction: column; align-items: flex-start; gap: 8px; }
+      .skill-category { text-align: left; width: auto; }
+      .terminal-stats { left: 0; right: 0; bottom: -20px; }
+    }
+
+    /* ── Counter animation ── */
+    .counter-row {
+      display: flex; gap: 40px; margin-top: 40px; padding-top: 40px;
+      border-top: 1px solid var(--border);
+    }
+    .counter-item { text-align: center; }
+    .counter-num {
+      font-family: var(--font-display); font-size: 36px; font-weight: 800;
+      color: var(--accent); line-height: 1;
+    }
+    .counter-label { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 6px; }
+
+    /* ── Horizontal scroll ticker ── */
+    .ticker-wrap {
+      overflow: hidden; padding: 16px 0;
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      margin: 80px 0;
+    }
+    .ticker {
+      display: flex; gap: 60px; white-space: nowrap;
+      animation: ticker 30s linear infinite;
+      font-family: var(--font-mono); font-size: 13px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px;
+    }
+    .ticker span { display: flex; align-items: center; gap: 10px; }
+    .ticker .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ── Mobile menu ── */
+    .mobile-menu-btn { display: none; background: none; border: none; color: var(--text-primary); font-size: 24px; cursor: pointer; padding: 4px; }
+    @media (max-width: 900px) { .mobile-menu-btn { display: block; } }
   </style>
 </head>
-<body class="min-h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 antialiased">
-  <div id="progress" class="bg-zinc-900/80 dark:bg-zinc-100/90"></div>
-  <div class="grid-bg"></div>
-  <div class="fixed inset-0 -z-30 overflow-hidden pointer-events-none">
-    <div class="absolute -top-40 -left-40 h-[42rem] w-[42rem] rounded-full blur-3xl opacity-30 bg-gradient-to-br from-indigo-500 via-cyan-400 to-emerald-400 dark:opacity-20"></div>
-    <div class="absolute top-1/3 -right-40 h-[36rem] w-[36rem] rounded-full blur-3xl opacity-25 bg-gradient-to-br from-rose-400 via-fuchsia-400 to-indigo-400 dark:opacity-15"></div>
-    <div class="absolute bottom-0 left-1/4 h-[28rem] w-[28rem] rounded-full blur-3xl opacity-25 bg-gradient-to-br from-amber-300 via-lime-300 to-emerald-300 dark:opacity-15"></div>
-  </div>
-  <svg class="circuit" viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
-    <defs><linearGradient id="glow" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#60a5fa"/><stop offset="100%" stop-color="#34d399"/></linearGradient></defs>
-    <g>
-      <script type="application/ecmascript"><![CDATA[
-        (function(){const g=document.currentScript.parentNode;for(let i=0;i<40;i++){const p=document.createElementNS('http://www.w3.org/2000/svg','path');const cx=(i*30)%1200,cy=(i*18)%800;p.setAttribute('d',`M${cx} ${cy} h70 v30 h40 v30`);p.setAttribute('stroke','url(#glow)');p.setAttribute('stroke-width','1');p.setAttribute('fill','none');g.appendChild(p);const c=document.createElementNS('http://www.w3.org/2000/svg','circle');c.setAttribute('cx',(cx+70)%1200);c.setAttribute('cy',cy);c.setAttribute('r','2');c.setAttribute('fill','#22d3ee');g.appendChild(c);}})();
-      ]]></script>
-    </g>
-  </svg>
+<body>
+  <canvas id="matrixCanvas"></canvas>
+  <div class="grid-overlay"></div>
+  <div class="glow-blob glow-blob-1"></div>
+  <div class="glow-blob glow-blob-2"></div>
+  <div class="glow-blob glow-blob-3"></div>
+  <div id="progress"></div>
 
-  <header class="sticky top-0 z-40 border-b border-zinc-200/70 dark:border-zinc-800/70 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:supports-[backdrop-filter]:bg-zinc-950/40">
-    <div class="mx-auto max-w-6xl px-5 py-3 flex items-center justify-between gap-3">
-      <a href="#about" class="font-bold text-lg tracking-tight">MB</a>
-      <nav class="hidden md:flex items-center gap-1">
-        <a href="#about" class="px-3 py-1.5 rounded-full text-sm hover:bg-zinc-100 dark:hover:bg-zinc-800/70">About</a>
-        <a href="#cyber" class="px-3 py-1.5 rounded-full text-sm hover:bg-zinc-100 dark:hover:bg-zinc-800/70">Cyber Focus</a>
-        <a href="#experience" class="px-3 py-1.5 rounded-full text-sm hover:bg-zinc-100 dark:hover:bg-zinc-800/70">Experience</a>
-        <a href="#projects" class="px-3 py-1.5 rounded-full text-sm hover:bg-zinc-100 dark:hover:bg-zinc-800/70">Projects</a>
-        <a href="#skills" class="px-3 py-1.5 rounded-full text-sm hover:bg-zinc-100 dark:hover:bg-zinc-800/70">Skills</a>
-        <a href="#certs" class="px-3 py-1.5 rounded-full text-sm hover:bg-zinc-100 dark:hover:bg-zinc-800/70">Certifications</a>
-        <a href="#contact" class="px-3 py-1.5 rounded-full text-sm hover:bg-zinc-100 dark:hover:bg-zinc-800/70">Contact</a>
+  <!-- ── Header ── -->
+  <header>
+    <div class="header-inner">
+      <a href="#about" class="logo">MB<span>.sec</span></a>
+      <nav>
+        <a href="#about">About</a>
+        <a href="#cyber">Focus</a>
+        <a href="#experience">Experience</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#certs">Certs</a>
+        <a href="#contact">Contact</a>
       </nav>
-      <button id="themeToggle" class="p-2 rounded hover:bg-zinc-100 dark:hover:bg-zinc-800/70" aria-label="Toggle theme"><span id="sun" class="hidden">☀️</span><span id="moon">🌙</span></button>
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">☰</button>
     </div>
   </header>
 
   <main>
-    <section id="about" class="scroll-mt-24 py-14 sm:py-20">
-      <div class="mx-auto max-w-6xl px-5 grid md:grid-cols-5 gap-6 items-center">
-        <div class="md:col-span-3">
-          <div class="inline-flex items-center gap-2 rounded-full border border-zinc-300/70 dark:border-zinc-700/70 px-3 py-1 text-xs mb-3"><span>🛡️</span><span>Defensive Security • Detection Engineering</span></div>
-          <h1 class="text-2xl sm:text-3xl font-bold tracking-tight mb-2">Mahesh Babu Pentapati</h1>
-          <h2 class="text-lg sm:text-xl font-medium text-zinc-600 dark:text-zinc-300">SOC Analyst • FortiSIEM / FortiSOAR • Threat Hunting & Log Parsing</h2>
-          <p class="mt-4 text-zinc-700 dark:text-zinc-300">Cybersecurity professional focused on SOC operations, SIEM/SOAR engineering, and threat hunting. I build precise detections, robust parsers, and pragmatic automations.</p>
-          <div class="mt-6 flex flex-wrap gap-3">
-            <a href="mailto:maheshbabu.soc7@gmail.com" class="inline-flex items-center gap-2 rounded-xl px-4 py-2 border border-zinc-300 dark:border-zinc-700 hover:shadow-lg">✉️ Email</a>
-            <a href="tel:+917670866926" class="inline-flex items-center gap-2 rounded-xl px-4 py-2 border border-zinc-300 dark:border-zinc-700">📞 Call</a>
-            <a href="assets/resume.pdf" download class="inline-flex items-center gap-2 rounded-xl px-4 py-2 border border-zinc-300 dark:border-zinc-700 hover:shadow-lg">⬇️ Download Résumé</a>
+    <!-- ── Hero ── -->
+    <section class="hero" id="about">
+      <div class="container">
+        <div class="hero-grid">
+          <div>
+            <div class="status-badge reveal">
+              <span class="status-dot"></span>
+              <span>Defensive Security • Detection Engineering</span>
+            </div>
+            <h1 class="reveal reveal-delay-1">Mahesh Babu<br><span class="accent">Pentapati</span></h1>
+            <p class="hero-role reveal reveal-delay-2">SOC Analyst — FortiSIEM / FortiSOAR / QRadar</p>
+            <p class="hero-desc reveal reveal-delay-3">Cybersecurity professional with 3+ years in SOC operations across enterprise and BFSI environments. Specialized in SIEM/SOAR engineering, detection development, threat hunting, and incident response — currently securing 120+ organizations at a CERT-In empanelled MSSP.</p>
+            <div class="hero-actions reveal reveal-delay-4">
+              <a href="mailto:maheshbabu.soc7@gmail.com" class="btn btn-primary">✉ Get in Touch</a>
+              <a href="assets/resume.pdf" download class="btn btn-ghost">↓ Download Résumé</a>
+              <a href="tel:+917670866926" class="btn btn-ghost">📞 Call</a>
+            </div>
           </div>
-        </div>
-        <div class="md:col-span-2 relative">
-          <div class="absolute -inset-1 rounded-3xl blur-2xl opacity-40 bg-gradient-to-tr from-indigo-500 via-emerald-500 to-cyan-400"></div>
-          <div class="relative aspect-square rounded-3xl bg-gradient-to-br from-zinc-100 to-zinc-50 dark:from-zinc-900 dark:to-zinc-950 border border-zinc-200 dark:border-zinc-800 overflow-hidden">
-            <img src="assets/profile.jpg" alt="Mahesh Babu Pentapati" class="w-full h-full object-cover" />
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="cyber" class="scroll-mt-24 py-14 sm:py-20">
-      <div class="mx-auto max-w-6xl px-5">
-        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mb-6">Cyber Focus</h2>
-        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          <div class="rounded-2xl border border-zinc-200 dark:border-zinc-800 p-6 bg-white/70 dark:bg-zinc-900/60">
-            <h3 class="text-lg font-semibold">Detection Engineering</h3>
-            <p class="mt-2 text-sm text-zinc-700 dark:text-zinc-300">Build precise SIEM rules & parsers (FortiSIEM/QRadar/Splunk). Emphasis on fidelity, aggregation windows, and anti-evasion regex.</p>
-            <div class="mt-3 flex gap-2 flex-wrap"><span class="px-3 py-1 rounded-full border text-sm">ATT&CK TTPs</span><span class="px-3 py-1 rounded-full border text-sm">Noise Control</span><span class="px-3 py-1 rounded-full border text-sm">Coverage</span></div>
-          </div>
-          <div class="rounded-2xl border border-zinc-200 dark:border-zinc-800 p-6 bg-white/70 dark:bg-zinc-900/60">
-            <h3 class="text-lg font-semibold">Incident Response</h3>
-            <p class="mt-2 text-sm text-zinc-700 dark:text-zinc-300">Rapid scoping with pivoting (process, network, identity). Playbooks for phishing, ransomware, lateral movement.</p>
-            <div class="mt-3 flex gap-2 flex-wrap"><span class="px-3 py-1 rounded-full border text-sm">Triage</span><span class="px-3 py-1 rounded-full border text-sm">Hunt</span><span class="px-3 py-1 rounded-full border text-sm">IR Playbooks</span></div>
-          </div>
-          <div class="rounded-2xl border border-zinc-200 dark:border-zinc-800 p-6 bg-white/70 dark:bg-zinc-900/60">
-            <h3 class="text-lg font-semibold">Adversary Emulation</h3>
-            <p class="mt-2 text-sm text-zinc-700 dark:text-zinc-300">Safe simulations to validate detections (PowerShell/PsExec/MSHTA/Ngrok scenarios) mapped to ATT&CK.</p>
-            <div class="mt-3 flex gap-2 flex-wrap"><span class="px-3 py-1 rounded-full border text-sm">Atomic Red Team</span><span class="px-3 py-1 rounded-full border text-sm">Caldera</span></div>
-          </div>
-          <div class="rounded-2xl border border-zinc-200 dark:border-zinc-800 p-6 bg-white/70 dark:bg-zinc-900/60">
-            <h3 class="text-lg font-semibold">SIEM Engineering</h3>
-            <p class="mt-2 text-sm text-zinc-700 dark:text-zinc-300">Normalization, enrichment, and dashboards for exec reporting and SOC ops.</p>
-            <div class="mt-3 flex gap-2 flex-wrap"><span class="px-3 py-1 rounded-full border text-sm">Data Models</span><span class="px-3 py-1 rounded-full border text-sm">Dashboards</span></div>
-          </div>
-          <div class="rounded-2xl border border-zinc-200 dark:border-zinc-800 p-6 bg-white/70 dark:bg-zinc-900/60">
-            <h3 class="text-lg font-semibold">Threat Intel & Enrichment</h3>
-            <p class="mt-2 text-sm text-zinc-700 dark:text-zinc-300">Automated lookups and risk scoring to boost investigation speed.</p>
-            <div class="mt-3 flex gap-2 flex-wrap"><span class="px-3 py-1 rounded-full border text-sm">AbuseIPDB</span><span class="px-3 py-1 rounded-full border text-sm">VT</span></div>
-          </div>
-          <div class="rounded-2xl border border-zinc-200 dark:border-zinc-800 p-6 bg-white/70 dark:bg-zinc-900/60">
-            <h3 class="text-lg font-semibold">Compliance & Reporting</h3>
-            <p class="mt-2 text-sm text-zinc-700 dark:text-zinc-300">Evidence-ready summaries, retention posture, and alert hygiene.</p>
-            <div class="mt-3 flex gap-2 flex-wrap"><span class="px-3 py-1 rounded-full border text-sm">RBI</span><span class="px-3 py-1 rounded-full border text-sm">Audits</span></div>
+          <div class="profile-visual reveal reveal-delay-3">
+            <div class="profile-glow"></div>
+            <div class="profile-frame">
+              <img src="assets/profile.jpg" alt="Mahesh Babu Pentapati" />
+            </div>
+            <div class="terminal-stats">
+              <div class="line"><span class="prompt">$</span> <span class="cmd">whoami</span></div>
+              <div class="line"><span class="output">mahesh@soc ~ detection-engineer</span></div>
+              <div class="line"><span class="prompt">$</span> <span class="cmd">uptime</span></div>
+              <div class="line"><span class="output">3+ yrs in SOC operations</span></div>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="experience" class="scroll-mt-24 py-14 sm:py-20">
-      <div class="mx-auto max-w-6xl px-5">
-        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mb-6">Experience</h2>
-        <div class="space-y-4">
-          <div class="rounded-2xl border border-zinc-200 dark:border-zinc-800 p-6 bg-white/70 dark:bg-zinc-900/60">
-            <div class="flex flex-wrap items-center justify-between gap-3"><h3 class="text-lg font-semibold">SOC Analyst — TechOwl</h3><div class="text-sm text-zinc-600 dark:text-zinc-400">Jun 2025 — Present</div></div>
-            <div class="text-sm mt-1 text-zinc-600 dark:text-zinc-400">Surat, Gujarat, India (On-site)</div>
-            <ul class="mt-3 list-disc pl-5 text-sm text-zinc-700 dark:text-zinc-300 space-y-1">
-              <li>CTH, FortiSIEM engineering, SIEM/SOAR implementations</li>
-              <li>Detections, parsers, automations for BFSI</li>
-              <li>Detection fidelity, exec dashboards</li>
-            </ul>
+    <!-- ── Ticker ── -->
+    <div class="ticker-wrap">
+      <div class="ticker">
+        <span><span class="dot"></span>THREAT HUNTING</span>
+        <span><span class="dot"></span>DETECTION ENGINEERING</span>
+        <span><span class="dot"></span>INCIDENT RESPONSE</span>
+        <span><span class="dot"></span>DIGITAL FORENSICS</span>
+        <span><span class="dot"></span>FORTISIEM</span>
+        <span><span class="dot"></span>FORTISOAR</span>
+        <span><span class="dot"></span>QRADAR</span>
+        <span><span class="dot"></span>MITRE ATT&CK</span>
+        <span><span class="dot"></span>SOAR AUTOMATION</span>
+        <span><span class="dot"></span>LOG ANALYSIS</span>
+        <span><span class="dot"></span>PACKET ANALYSIS</span>
+        <span><span class="dot"></span>PYTHON</span>
+        <span><span class="dot"></span>BFSI SECURITY</span>
+        <span><span class="dot"></span>CERT-IN</span>
+        <!-- duplicate for seamless loop -->
+        <span><span class="dot"></span>THREAT HUNTING</span>
+        <span><span class="dot"></span>DETECTION ENGINEERING</span>
+        <span><span class="dot"></span>INCIDENT RESPONSE</span>
+        <span><span class="dot"></span>DIGITAL FORENSICS</span>
+        <span><span class="dot"></span>FORTISIEM</span>
+        <span><span class="dot"></span>FORTISOAR</span>
+        <span><span class="dot"></span>QRADAR</span>
+        <span><span class="dot"></span>MITRE ATT&CK</span>
+        <span><span class="dot"></span>SOAR AUTOMATION</span>
+        <span><span class="dot"></span>LOG ANALYSIS</span>
+        <span><span class="dot"></span>PACKET ANALYSIS</span>
+        <span><span class="dot"></span>PYTHON</span>
+        <span><span class="dot"></span>BFSI SECURITY</span>
+        <span><span class="dot"></span>CERT-IN</span>
+      </div>
+    </div>
+
+    <!-- ── Cyber Focus ── -->
+    <section id="cyber">
+      <div class="container">
+        <div class="section-label reveal">Focus Areas</div>
+        <h2 class="section-title reveal reveal-delay-1">Cyber Focus</h2>
+        <div class="focus-grid">
+          <div class="focus-card reveal reveal-delay-1">
+            <div class="focus-icon">⚡</div>
+            <h3>Detection Engineering</h3>
+            <p>Author high-fidelity correlation rules, custom parsers, and regex-based detection logic in FortiSIEM & QRadar. Focus on minimizing false positives through aggregation windows, threshold tuning, and anti-evasion patterns aligned to MITRE ATT&CK TTPs.</p>
+            <div class="tags"><span class="tag">ATT&CK TTPs</span><span class="tag">Noise Control</span><span class="tag">Correlation Rules</span><span class="tag">Parser Dev</span></div>
           </div>
-          <div class="rounded-2xl border border-zinc-200 dark:border-zinc-800 p-6 bg-white/70 dark:bg-zinc-900/60">
-            <div class="flex flex-wrap items-center justify-between gap-3"><h3 class="text-lg font-semibold">SOC Analyst — Mastercard</h3><div class="text-sm text-zinc-600 dark:text-zinc-400">Sep 2022 — Jun 2025</div></div>
-            <div class="text-sm mt-1 text-zinc-600 dark:text-zinc-400">Pune, Maharashtra, India</div>
-            <ul class="mt-3 list-disc pl-5 text-sm text-zinc-700 dark:text-zinc-300 space-y-1">
-              <li>QRadar-based monitoring, detection, response</li>
-              <li>Correlation tuning to cut false positives</li>
-              <li>Global SOC hunts & IR exercises</li>
-            </ul>
+          <div class="focus-card reveal reveal-delay-2">
+            <div class="focus-icon">🔥</div>
+            <h3>Incident Response & Triage</h3>
+            <p>First-responder triage across L1/L2 escalation workflows. Rapid scoping through process trees, network pivots, and identity correlation. Execute structured playbooks for phishing, ransomware, brute-force, and lateral movement scenarios.</p>
+            <div class="tags"><span class="tag">Triage</span><span class="tag">Containment</span><span class="tag">IR Playbooks</span><span class="tag">RCA</span></div>
+          </div>
+          <div class="focus-card reveal reveal-delay-3">
+            <div class="focus-icon">🔍</div>
+            <h3>Cyber Threat Hunting</h3>
+            <p>Hypothesis-driven hunts across endpoint, network, and identity telemetry. Proactive searches for persistence mechanisms, C2 beaconing, credential abuse, and living-off-the-land techniques using FortiSIEM queries and log deep-dives.</p>
+            <div class="tags"><span class="tag">IOC Sweeps</span><span class="tag">Behavioral Analysis</span><span class="tag">LOLBins</span></div>
+          </div>
+          <div class="focus-card reveal reveal-delay-1">
+            <div class="focus-icon">🎯</div>
+            <h3>Adversary Emulation</h3>
+            <p>Safe attack simulations to validate detection coverage — PowerShell download cradles, PsExec lateral movement, MSHTA abuse, Ngrok tunneling, and credential dumping scenarios mapped to ATT&CK techniques.</p>
+            <div class="tags"><span class="tag">Atomic Red Team</span><span class="tag">Caldera</span><span class="tag">Purple Teaming</span></div>
+          </div>
+          <div class="focus-card reveal reveal-delay-2">
+            <div class="focus-icon">📊</div>
+            <h3>SIEM / SOAR Engineering</h3>
+            <p>End-to-end FortiSIEM deployments — log source onboarding, event normalization, custom data models, and executive dashboards. FortiSOAR playbook development for automated enrichment, ticketing, and response orchestration.</p>
+            <div class="tags"><span class="tag">FortiSIEM</span><span class="tag">FortiSOAR</span><span class="tag">Dashboards</span><span class="tag">Automation</span></div>
+          </div>
+          <div class="focus-card reveal reveal-delay-3">
+            <div class="focus-icon">🧠</div>
+            <h3>Threat Intel & Enrichment</h3>
+            <p>Automated IOC enrichment pipelines using AbuseIPDB, VirusTotal, and OSINT feeds. Risk scoring integration into SIEM alerts for context-aware triage and faster analyst decision-making.</p>
+            <div class="tags"><span class="tag">AbuseIPDB</span><span class="tag">VirusTotal</span><span class="tag">OSINT</span><span class="tag">Risk Scoring</span></div>
+          </div>
+          <div class="focus-card reveal reveal-delay-1">
+            <div class="focus-icon">🔬</div>
+            <h3>Digital Forensics</h3>
+            <p>Post-incident artifact collection and evidence preservation. Windows event log analysis, memory forensics basics, timeline reconstruction, and chain-of-custody documentation for IR investigations.</p>
+            <div class="tags"><span class="tag">Log Analysis</span><span class="tag">Timeline</span><span class="tag">Evidence</span><span class="tag">Artifacts</span></div>
+          </div>
+          <div class="focus-card reveal reveal-delay-2">
+            <div class="focus-icon">🛡️</div>
+            <h3>Log Source Integration</h3>
+            <p>Onboard and normalize diverse log sources — firewalls, WAF, AD/LDAP, Windows Event Logs, EDR (Trend Vision One), cloud services, and network devices into unified SIEM schemas for cross-source correlation.</p>
+            <div class="tags"><span class="tag">Syslog</span><span class="tag">WMI/WEC</span><span class="tag">API Pulls</span><span class="tag">Normalization</span></div>
+          </div>
+          <div class="focus-card reveal reveal-delay-3">
+            <div class="focus-icon">📋</div>
+            <h3>Compliance & Reporting</h3>
+            <p>RBI advisory compliance documentation for banking clients. Evidence-ready summaries, CERT-In incident reporting, retention posture audits, and periodic security review reports for BFSI organizations.</p>
+            <div class="tags"><span class="tag">RBI</span><span class="tag">CERT-In</span><span class="tag">BFSI Audits</span><span class="tag">MIS Reports</span></div>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="projects" class="scroll-mt-24 py-14 sm:py-20">
-      <div class="mx-auto max-w-6xl px-5">
-        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mb-6">Selected Projects</h2>
-        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          <div class="rounded-2xl border border-zinc-200 dark:border-zinc-800 p-6 bg-white/70 dark:bg-zinc-900/60"><h3 class="text-lg font-semibold">SQL Injection Detection Suite</h3><p class="mt-2 text-sm text-zinc-700 dark:text-zinc-300">Regex-based categories for time-based, boolean, and obfuscated payloads with noise reduction and coverage controls.</p><div class="mt-3 flex gap-2 flex-wrap"><span class="px-3 py-1 rounded-full border text-sm">FortiSIEM</span><span class="px-3 py-1 rounded-full border text-sm">Regex</span><span class="px-3 py-1 rounded-full border text-sm">ATT&CK</span></div></div>
-          <div class="rounded-2xl border border-zinc-200 dark:border-zinc-800 p-6 bg-white/70 dark:bg-zinc-900/60"><h3 class="text-lg font-semibold">Windows DNS Flow Analytics (256/257/260/261)</h3><p class="mt-2 text-sm text-zinc-700 dark:text-zinc-300">Correlates query/response pairs to flag pointer loops, suspicious NXDOMAIN bursts, and potential exfiltration.</p><div class="mt-3 flex gap-2 flex-wrap"><span class="px-3 py-1 rounded-full border text-sm">Windows DNS</span><span class="px-3 py-1 rounded-full border text-sm">Analytics</span><span class="px-3 py-1 rounded-full border text-sm">Hunting</span></div></div>
-          <div class="rounded-2xl border border-zinc-200 dark:border-zinc-800 p-6 bg-white/70 dark:bg-zinc-900/60"><h3 class="text-lg font-semibold">Trend Vision One Telemetry Normalization</h3><p class="mt-2 text-sm text-zinc-700 dark:text-zinc-300">Unified SIEM schema for consistent detections & dashboards.</p><div class="mt-3 flex gap-2 flex-wrap"><span class="px-3 py-1 rounded-full border text-sm">TV1</span><span class="px-3 py-1 rounded-full border text-sm">Mapping</span><span class="px-3 py-1 rounded-full border text-sm">Dashboards</span></div></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="skills" class="scroll-mt-24 py-14 sm:py-20">
-      <div class="mx-auto max-w-6xl px-5">
-        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mb-6">Skills</h2>
-        <div class="flex flex-wrap gap-2">
-          <span class="px-3 py-1 rounded-full border text-sm">Threat Hunting</span>
-          <span class="px-3 py-1 rounded-full border text-sm">Incident Response</span>
-          <span class="px-3 py-1 rounded-full border text-sm">FortiSIEM</span>
-          <span class="px-3 py-1 rounded-full border text-sm">FortiSOAR</span>
-          <span class="px-3 py-1 rounded-full border text-sm">QRadar</span>
-          <span class="px-3 py-1 rounded-full border text-sm">Splunk</span>
-          <span class="px-3 py-1 rounded-full border text-sm">MITRE ATT&CK</span>
-          <span class="px-3 py-1 rounded-full border text-sm">Linux</span>
-          <span class="px-3 py-1 rounded-full border text-sm">Packet Analysis</span>
-          <span class="px-3 py-1 rounded-full border text-sm">Python</span>
-        </div>
-      </div>
-    </section>
-
-    <section id="certs" class="scroll-mt-24 py-14 sm:py-20">
-      <div class="mx-auto max-w-6xl px-5">
-        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mb-6">Certifications</h2>
-        <div class="grid sm:grid-cols-2 gap-5">
-          <div class="rounded-2xl border border-zinc-200 dark:border-zinc-800 p-6 bg-white/70 dark:bg-zinc-900/60"><h3 class="text-lg font-semibold">Fortinet Certified Associate in Cybersecurity</h3><p class="mt-2 text-sm text-zinc-700 dark:text-zinc-300">Issued Jul 2025 • Expires Jul 2027 • ID: 2072677544MP</p></div>
-          <div class="rounded-2xl border border-zinc-200 dark:border-zinc-800 p-6 bg-white/70 dark:bg-zinc-900/60"><h3 class="text-lg font-semibold">NSE Level 1: Certified Associate</h3><p class="mt-2 text-sm text-zinc-700 dark:text-zinc-300">Issued Jul 2025</p></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="contact" class="scroll-mt-24 py-14 sm:py-20">
-      <div class="mx-auto max-w-6xl px-5 grid md:grid-cols-2 gap-6 items-start">
-        <div class="space-y-3">
-          <a href="mailto:maheshbabu.soc7@gmail.com" class="inline-flex items-center gap-2 p-3 rounded-xl border border-zinc-300 dark:border-zinc-700 w-full">✉️ maheshbabu.soc7@gmail.com</a>
-          <a href="tel:+917670866926" class="inline-flex items-center gap-2 p-3 rounded-xl border border-zinc-300 dark:border-zinc-700 w-full">📞 +91 7670866926</a>
-          <a href="https://www.linkedin.com/in/mahesh-babu-pentapati-soc" target="_blank" class="inline-flex items-center gap-2 p-3 rounded-xl border border-zinc-300 dark:border-zinc-700 w-full">🔗 LinkedIn</a>
-          <a href="https://github.com/maheshpentapati" target="_blank" class="inline-flex items-center gap-2 p-3 rounded-xl border border-zinc-300 dark:border-zinc-700 w-full">💻 GitHub</a>
-        </div>
-        <form onsubmit="event.preventDefault(); const fd=new FormData(this); const name=fd.get('name'); const email=fd.get('email'); const msg=fd.get('message'); location.href=`mailto:maheshbabu.soc7@gmail.com?subject=Portfolio%20contact%20from%20${encodeURIComponent(name||'')}&body=${encodeURIComponent(msg||'')}%0A%0AFrom:%20${encodeURIComponent(email||'')}`;" class="rounded-2xl border border-zinc-200 dark:border-zinc-800 p-6 bg-white/70 dark:bg-zinc-900/60">
-          <div class="grid gap-4">
-            <div><label class="block text-sm mb-1">Name</label><input name="name" required class="w-full rounded-xl border border-zinc-300 dark:border-zinc-700 bg-transparent px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" /></div>
-            <div><label class="block text-sm mb-1">Email</label><input name="email" type="email" required class="w-full rounded-xl border border-zinc-300 dark:border-zinc-700 bg-transparent px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" /></div>
-            <div><label class="block text-sm mb-1">Message</label><textarea name="message" rows="5" required class="w-full rounded-xl border border-zinc-300 dark:border-zinc-700 bg-transparent px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea></div>
-            <button class="inline-flex items-center gap-2 justify-center rounded-xl px-4 py-2 border border-zinc-300 dark:border-zinc-700 hover:shadow-lg">Send ↗</button>
+    <!-- ── Experience ── -->
+    <section id="experience">
+      <div class="container">
+        <div class="section-label reveal">Career</div>
+        <h2 class="section-title reveal reveal-delay-1">Experience</h2>
+        <div class="timeline">
+          <div class="timeline-item current reveal reveal-delay-1">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+              <div class="timeline-header">
+                <h3>SOC Analyst — TechOwl InfoSec Pvt. Ltd.</h3>
+                <span class="timeline-date">Jun 2025 — Present</span>
+              </div>
+              <div class="timeline-location">Surat, Gujarat, India • On-site • CERT-In Empanelled MSSP</div>
+              <ul>
+                <li>Monitor and respond to security incidents across 120+ client organizations in the BFSI, government, and enterprise sectors via 24x7 SOC operations</li>
+                <li>Engineer FortiSIEM correlation rules, custom parsers, and detection logic for multi-tenant environments — tuning for fidelity and minimizing false positives</li>
+                <li>Develop FortiSOAR playbooks for automated incident enrichment, threat intel lookups (AbuseIPDB, VirusTotal), and ITSM ticket creation</li>
+                <li>Conduct proactive threat hunts across endpoint, firewall, and AD logs — hunting for persistence, credential abuse, C2 beaconing, and lateral movement</li>
+                <li>Onboard and normalize diverse log sources — FortiGate, Windows Event Logs, Active Directory, WAF, EDR (Trend Vision One), and network devices</li>
+                <li>Build executive-level security dashboards and MIS reports for client stakeholders and compliance teams</li>
+                <li>Prepare RBI advisory compliance documentation and CERT-In incident reports for banking clients</li>
+                <li>Perform forensic log analysis during post-incident investigations — timeline reconstruction, artifact collection, and root cause documentation</li>
+              </ul>
+            </div>
           </div>
-        </form>
+          <div class="timeline-item reveal reveal-delay-2">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+              <div class="timeline-header">
+                <h3>SOC Analyst — Mastercard</h3>
+                <span class="timeline-date">Sep 2022 — Jun 2025</span>
+              </div>
+              <div class="timeline-location">Pune, Maharashtra, India</div>
+              <ul>
+                <li>Monitored global infrastructure using IBM QRadar SIEM — triaging alerts across network, endpoint, and identity event sources</li>
+                <li>Tuned correlation rules and offense management to reduce false positive rates and improve SOC analyst efficiency</li>
+                <li>Investigated phishing campaigns, brute-force attacks, suspicious authentication patterns, and policy violations across enterprise environments</li>
+                <li>Participated in global SOC threat hunting exercises — proactive searches for APT indicators, anomalous DNS patterns, and unauthorized lateral movement</li>
+                <li>Performed packet-level analysis using Wireshark for deep-dive network investigations during incident response</li>
+                <li>Collaborated with IR teams on structured incident response procedures — scoping, containment, eradication, and post-incident reporting</li>
+                <li>Documented detection gaps and proposed new use cases aligned to MITRE ATT&CK framework for continuous coverage improvement</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Projects ── -->
+    <section id="projects">
+      <div class="container">
+        <div class="section-label reveal">Work</div>
+        <h2 class="section-title reveal reveal-delay-1">Selected Projects</h2>
+        <div class="projects-grid">
+          <div class="project-card reveal reveal-delay-1">
+            <span class="project-num">01</span>
+            <h3>SQL Injection Detection Suite</h3>
+            <p>Multi-layered regex detection for time-based blind, boolean-based, UNION-based, and obfuscated SQLi payloads. Includes aggregation windows for burst detection, noise suppression for scanners, and ATT&CK T1190 mapping.</p>
+            <div class="tags"><span class="tag">FortiSIEM</span><span class="tag">Regex</span><span class="tag">WAF Logs</span><span class="tag">ATT&CK</span></div>
+          </div>
+          <div class="project-card reveal reveal-delay-2">
+            <span class="project-num">02</span>
+            <h3>Windows DNS Exfiltration Hunt</h3>
+            <p>Correlation of DNS query/response pairs (Event IDs 256/257/260/261) to detect pointer loops, NXDOMAIN bursts, high-entropy subdomain queries, and potential data exfiltration via DNS tunneling.</p>
+            <div class="tags"><span class="tag">Threat Hunting</span><span class="tag">DNS Analytics</span><span class="tag">Exfiltration</span></div>
+          </div>
+          <div class="project-card reveal reveal-delay-3">
+            <span class="project-num">03</span>
+            <h3>Credential Abuse & Brute-Force Detection</h3>
+            <p>Detection rules for distributed brute-force, password spraying, impossible travel, and credential stuffing across AD/LDAP and VPN logs. Threshold-based alerting with account lockout correlation.</p>
+            <div class="tags"><span class="tag">Active Directory</span><span class="tag">T1110</span><span class="tag">FortiSIEM</span></div>
+          </div>
+          <div class="project-card reveal reveal-delay-1">
+            <span class="project-num">04</span>
+            <h3>FortiSOAR IR Playbook Automation</h3>
+            <p>End-to-end incident response playbooks — auto-enrichment via AbuseIPDB/VT, dynamic severity assignment, ITSM ticket creation, analyst notification, and SLA tracking for BFSI SOC operations.</p>
+            <div class="tags"><span class="tag">FortiSOAR</span><span class="tag">Automation</span><span class="tag">ITSM</span><span class="tag">Playbooks</span></div>
+          </div>
+          <div class="project-card reveal reveal-delay-2">
+            <span class="project-num">05</span>
+            <h3>Ransomware Forensic Investigation</h3>
+            <p>Post-incident forensic analysis — Windows Event Log deep-dive, lateral movement timeline reconstruction, persistence mechanism identification, IOC extraction, and CERT-In reporting for affected banking client.</p>
+            <div class="tags"><span class="tag">Forensics</span><span class="tag">Timeline</span><span class="tag">IOC Extraction</span><span class="tag">CERT-In</span></div>
+          </div>
+          <div class="project-card reveal reveal-delay-3">
+            <span class="project-num">06</span>
+            <h3>Trend Vision One Telemetry Normalization</h3>
+            <p>Unified SIEM schema mapping for Trend Vision One EDR telemetry — field normalization, event categorization, and custom dashboards for endpoint visibility across multi-tenant FortiSIEM deployments.</p>
+            <div class="tags"><span class="tag">TV1 EDR</span><span class="tag">Parser Dev</span><span class="tag">Schema Mapping</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Skills ── -->
+    <section id="skills">
+      <div class="container">
+        <div class="section-label reveal">Toolkit</div>
+        <h2 class="section-title reveal reveal-delay-1">Skills</h2>
+        <div class="skills-container">
+          <div class="skill-row reveal reveal-delay-1">
+            <div class="skill-category">SIEM / SOAR</div>
+            <div class="skill-items">
+              <span class="skill-tag">FortiSIEM</span>
+              <span class="skill-tag">FortiSOAR</span>
+              <span class="skill-tag">IBM QRadar</span>
+              <span class="skill-tag">Splunk</span>
+              <span class="skill-tag">Correlation Rules</span>
+              <span class="skill-tag">Custom Parsers</span>
+            </div>
+          </div>
+          <div class="skill-row reveal reveal-delay-2">
+            <div class="skill-category">Blue Team</div>
+            <div class="skill-items">
+              <span class="skill-tag">Threat Hunting</span>
+              <span class="skill-tag">Incident Response</span>
+              <span class="skill-tag">Digital Forensics</span>
+              <span class="skill-tag">Malware Analysis (Basic)</span>
+              <span class="skill-tag">Log Analysis</span>
+              <span class="skill-tag">Alert Triage</span>
+            </div>
+          </div>
+          <div class="skill-row reveal reveal-delay-3">
+            <div class="skill-category">Frameworks</div>
+            <div class="skill-items">
+              <span class="skill-tag">MITRE ATT&CK</span>
+              <span class="skill-tag">Cyber Kill Chain</span>
+              <span class="skill-tag">NIST CSF</span>
+              <span class="skill-tag">OWASP Top 10</span>
+            </div>
+          </div>
+          <div class="skill-row reveal reveal-delay-4">
+            <div class="skill-category">Network</div>
+            <div class="skill-items">
+              <span class="skill-tag">Wireshark</span>
+              <span class="skill-tag">Packet Analysis</span>
+              <span class="skill-tag">TCP/IP</span>
+              <span class="skill-tag">DNS / DHCP</span>
+              <span class="skill-tag">Firewall Logs</span>
+              <span class="skill-tag">FortiGate</span>
+            </div>
+          </div>
+          <div class="skill-row reveal reveal-delay-5">
+            <div class="skill-category">Endpoint</div>
+            <div class="skill-items">
+              <span class="skill-tag">Windows Event Logs</span>
+              <span class="skill-tag">Active Directory</span>
+              <span class="skill-tag">Trend Vision One</span>
+              <span class="skill-tag">Sysmon</span>
+              <span class="skill-tag">PowerShell Logging</span>
+            </div>
+          </div>
+          <div class="skill-row reveal reveal-delay-5">
+            <div class="skill-category">Technical</div>
+            <div class="skill-items">
+              <span class="skill-tag">Python</span>
+              <span class="skill-tag">Linux</span>
+              <span class="skill-tag">Regex</span>
+              <span class="skill-tag">Bash Scripting</span>
+              <span class="skill-tag">SQL</span>
+              <span class="skill-tag">REST APIs</span>
+            </div>
+          </div>
+          <div class="skill-row reveal reveal-delay-5">
+            <div class="skill-category">Intel / OSINT</div>
+            <div class="skill-items">
+              <span class="skill-tag">AbuseIPDB</span>
+              <span class="skill-tag">VirusTotal</span>
+              <span class="skill-tag">Shodan</span>
+              <span class="skill-tag">OSINT Techniques</span>
+              <span class="skill-tag">IOC Management</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Certifications ── -->
+    <section id="certs">
+      <div class="container">
+        <div class="section-label reveal">Credentials</div>
+        <h2 class="section-title reveal reveal-delay-1">Certifications</h2>
+        <div class="certs-grid">
+          <div class="cert-card reveal reveal-delay-1">
+            <div class="cert-badge">FCA</div>
+            <div>
+              <h3>Fortinet Certified Associate in Cybersecurity</h3>
+              <p>Issued Jul 2025 • Expires Jul 2027 • ID: 2072677544MP</p>
+            </div>
+          </div>
+          <div class="cert-card reveal reveal-delay-2">
+            <div class="cert-badge">NSE1</div>
+            <div>
+              <h3>NSE Level 1: Certified Associate</h3>
+              <p>Issued Jul 2025 • Fortinet Network Security Expert Program</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Contact ── -->
+    <section id="contact">
+      <div class="container">
+        <div class="section-label reveal">Connect</div>
+        <h2 class="section-title reveal reveal-delay-1">Get in Touch</h2>
+        <div class="contact-grid">
+          <div class="contact-links reveal reveal-delay-2">
+            <a href="mailto:maheshbabu.soc7@gmail.com" class="contact-link"><span class="icon">✉</span> maheshbabu.soc7@gmail.com</a>
+            <a href="tel:+917670866926" class="contact-link"><span class="icon">📞</span> +91 7670866926</a>
+            <a href="https://www.linkedin.com/in/mahesh-babu-pentapati-soc" target="_blank" class="contact-link"><span class="icon">🔗</span> LinkedIn</a>
+            <a href="https://github.com/maheshpentapati" target="_blank" class="contact-link"><span class="icon">💻</span> GitHub</a>
+          </div>
+          <form class="contact-form reveal reveal-delay-3" onsubmit="event.preventDefault(); const fd=new FormData(this); const name=fd.get('name'); const email=fd.get('email'); const msg=fd.get('message'); location.href=`mailto:maheshbabu.soc7@gmail.com?subject=Portfolio%20contact%20from%20${encodeURIComponent(name||'')}&body=${encodeURIComponent(msg||'')}%0A%0AFrom:%20${encodeURIComponent(email||'')}`;">
+            <div class="form-group">
+              <label>Name</label>
+              <input name="name" required placeholder="Your name" />
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input name="email" type="email" required placeholder="your@email.com" />
+            </div>
+            <div class="form-group">
+              <label>Message</label>
+              <textarea name="message" required placeholder="How can I help?"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">Send Message →</button>
+          </form>
+        </div>
       </div>
     </section>
   </main>
 
-  <footer class="py-10 border-t border-zinc-200 dark:border-zinc-800 text-sm">
-    <div class="mx-auto max-w-6xl px-5 flex flex-col sm:flex-row items-center justify-between gap-4">
-      <p>© <span id="year"></span> Mahesh Babu Pentapati. Built with ❤</p>
-      <div class="flex items-center gap-3 opacity-80">
-        <a href="https://www.linkedin.com/in/mahesh-babu-pentapati-soc" target="_blank" class="underline-offset-4 hover:underline">LinkedIn</a>
-        <a href="https://github.com/maheshpentapati" target="_blank" class="underline-offset-4 hover:underline">GitHub</a>
-        <a href="assets/resume.pdf" download class="underline-offset-4 hover:underline">Résumé</a>
+  <footer>
+    <div class="footer-inner">
+      <span>© <span id="year"></span> Mahesh Babu Pentapati</span>
+      <div class="footer-links">
+        <a href="https://www.linkedin.com/in/mahesh-babu-pentapati-soc" target="_blank">LinkedIn</a>
+        <a href="https://github.com/maheshpentapati" target="_blank">GitHub</a>
+        <a href="assets/resume.pdf" download>Résumé</a>
       </div>
     </div>
   </footer>
 
   <script>
+    // ── Year ──
     document.getElementById('year').textContent = new Date().getFullYear();
-    const btn=document.getElementById('themeToggle'), sun=document.getElementById('sun'), moon=document.getElementById('moon');
-    btn.addEventListener('click', ()=>{const isDark=document.documentElement.classList.toggle('dark'); localStorage.setItem('theme', isDark?'dark':'light'); sun.classList.toggle('hidden', !isDark); moon.classList.toggle('hidden', isDark);});
-    const prog=document.getElementById('progress'); window.addEventListener('scroll', ()=>{const s=scrollY, h=document.body.scrollHeight-innerHeight; const w=Math.max(0, Math.min(1, h? s/h : 0))*100; prog.style.width=w+'%';},{passive:true});
+
+    // ── Progress bar ──
+    const prog = document.getElementById('progress');
+    window.addEventListener('scroll', () => {
+      const s = scrollY, h = document.body.scrollHeight - innerHeight;
+      prog.style.width = Math.max(0, Math.min(1, h ? s / h : 0)) * 100 + '%';
+    }, { passive: true });
+
+    // ── Scroll reveal ──
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // ── Matrix rain canvas ──
+    (function() {
+      const canvas = document.getElementById('matrixCanvas');
+      const ctx = canvas.getContext('2d');
+      let w, h, cols, drops;
+      const chars = '01アイウエオカキクケコサシスセソ';
+
+      function resize() {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+        cols = Math.floor(w / 20);
+        drops = Array(cols).fill(1);
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      function draw() {
+        ctx.fillStyle = 'rgba(10, 10, 15, 0.12)';
+        ctx.fillRect(0, 0, w, h);
+        ctx.fillStyle = '#00e5a0';
+        ctx.font = '14px monospace';
+        for (let i = 0; i < drops.length; i++) {
+          const char = chars[Math.floor(Math.random() * chars.length)];
+          ctx.fillText(char, i * 20, drops[i] * 20);
+          if (drops[i] * 20 > h && Math.random() > 0.975) drops[i] = 0;
+          drops[i]++;
+        }
+      }
+      setInterval(draw, 55);
+    })();
+
+    // ── Typewriter effect for terminal ──
+    (function() {
+      const lines = document.querySelectorAll('.terminal-stats .line');
+      lines.forEach((line, i) => {
+        const text = line.innerHTML;
+        line.style.opacity = '0';
+        setTimeout(() => {
+          line.style.opacity = '1';
+          line.style.transition = 'opacity 0.3s';
+        }, 1500 + i * 400);
+      });
+    })();
+
+    // ── Active nav highlight ──
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('nav a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => {
+        if (scrollY >= s.offsetTop - 200) current = s.getAttribute('id');
+      });
+      navLinks.forEach(a => {
+        a.style.color = a.getAttribute('href') === '#' + current ? 'var(--accent)' : '';
+        a.style.background = a.getAttribute('href') === '#' + current ? 'var(--accent-dim)' : '';
+      });
+    }, { passive: true });
+
+    // ── Mobile menu ──
+    document.getElementById('mobileMenuBtn')?.addEventListener('click', () => {
+      const nav = document.querySelector('nav');
+      if (nav.style.display === 'flex') {
+        nav.style.display = 'none';
+      } else {
+        nav.style.display = 'flex';
+        nav.style.flexDirection = 'column';
+        nav.style.position = 'absolute';
+        nav.style.top = '60px';
+        nav.style.right = '24px';
+        nav.style.background = 'rgba(10,10,15,0.95)';
+        nav.style.border = '1px solid var(--border)';
+        nav.style.borderRadius = '12px';
+        nav.style.padding = '8px';
+        nav.style.backdropFilter = 'blur(20px)';
+      }
+    });
   </script>
 </body>
 </html>
