@@ -1,550 +1,506 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Mahesh Babu Pentapati - SOC Analyst and Detection Engineer</title>
-  <meta name="description" content="SOC Analyst - FortiSIEM, FortiSOAR, Detection Engineering, Threat Hunting" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&amp;family=Syne:wght@400;500;600;700;800&amp;family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    :root {
-      --bg-primary: #06080d;
-      --bg-secondary: #0a0e17;
-      --bg-card: rgba(12, 17, 28, 0.65);
-      --bg-card-hover: rgba(16, 22, 38, 0.85);
-      --text-primary: #e4e8f1;
-      --text-secondary: #8a92a8;
-      --text-muted: #4d5571;
-      --accent: #4af0c0;
-      --accent-dim: rgba(74, 240, 192, 0.08);
-      --accent-glow: rgba(74, 240, 192, 0.35);
-      --accent-blue: #5b8df8;
-      --accent-cyan: #38bdf8;
-      --accent-violet: #a78bfa;
-      --border: rgba(255, 255, 255, 0.05);
-      --border-hover: rgba(74, 240, 192, 0.2);
-      --font-display: 'Syne', sans-serif;
-      --font-mono: 'JetBrains Mono', monospace;
-      --font-body: 'DM Sans', sans-serif;
-      --radius: 14px;
-      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--accent) var(--bg-primary); }
-    body { font-family: var(--font-body); background: var(--bg-primary); color: var(--text-primary); overflow-x: hidden; line-height: 1.65; }
-    ::selection { background: var(--accent); color: var(--bg-primary); }
-    ::-webkit-scrollbar { width: 5px; }
-    ::-webkit-scrollbar-track { background: var(--bg-primary); }
-    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Mahesh Babu Pentapati — SOC Analyst &amp; Detection Engineer</title>
+<meta name="description" content="SOC Analyst - FortiSIEM, FortiSOAR, Detection Engineering, Threat Hunting, Incident Response"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#06080d;--bg2:#0a0e17;--card:rgba(12,17,28,0.65);--card-h:rgba(16,22,38,0.85);
+  --t1:#e4e8f1;--t2:#8a92a8;--t3:#4d5571;--t4:#2a3048;
+  --accent:#4af0c0;--accent-dim:rgba(74,240,192,0.08);--accent-glow:rgba(74,240,192,0.35);
+  --blue:#5b8df8;--cyan:#38bdf8;--violet:#a78bfa;--rose:#f472b6;
+  --border:rgba(255,255,255,0.05);--border-h:rgba(74,240,192,0.2);
+  --fd:'Syne',sans-serif;--fm:'JetBrains Mono',monospace;--fb:'DM Sans',sans-serif;
+  --r:14px;--ease:cubic-bezier(0.16,1,0.3,1);
+}
+html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--accent) var(--bg)}
+body{font-family:var(--fb);background:var(--bg);color:var(--t1);overflow-x:hidden;line-height:1.65}
+::selection{background:var(--accent);color:var(--bg)}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--accent);border-radius:2px}
 
-    body::before {
-      content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 9998; opacity: 0.022;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-      background-repeat: repeat; background-size: 128px 128px;
-    }
+/* NOISE */
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9998;opacity:.02;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat:repeat;background-size:128px}
 
-    #particleCanvas { position: fixed; inset: 0; z-index: -10; }
-    .mesh-blob { position: fixed; border-radius: 50%; pointer-events: none; z-index: -8; filter: blur(120px); }
-    .mesh-blob-1 { top: -15%; left: -8%; width: 600px; height: 600px; background: radial-gradient(circle, rgba(74,240,192,0.1) 0%, rgba(56,189,248,0.05) 60%, transparent 80%); animation: md1 24s ease-in-out infinite; }
-    .mesh-blob-2 { top: 35%; right: -12%; width: 500px; height: 500px; background: radial-gradient(circle, rgba(91,141,248,0.08) 0%, rgba(167,139,250,0.04) 60%, transparent 80%); animation: md2 28s ease-in-out infinite; }
-    .mesh-blob-3 { bottom: -10%; left: 25%; width: 450px; height: 450px; background: radial-gradient(circle, rgba(74,240,192,0.06) 0%, rgba(56,189,248,0.03) 60%, transparent 80%); animation: md3 22s ease-in-out infinite; }
-    @keyframes md1 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(50px,40px) scale(1.08); } }
-    @keyframes md2 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-40px,-50px) scale(1.05); } }
-    @keyframes md3 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(30px,-25px) scale(1.1); } }
+/* CUSTOM CURSOR */
+.cursor{position:fixed;width:16px;height:16px;border:1.5px solid var(--accent);border-radius:50%;pointer-events:none;z-index:10000;transition:width .3s var(--ease),height .3s var(--ease),border-color .3s,background .3s;transform:translate(-50%,-50%);mix-blend-mode:difference}
+.cursor.hover{width:48px;height:48px;background:rgba(74,240,192,0.08);border-color:rgba(74,240,192,0.5)}
+.cursor-dot{position:fixed;width:4px;height:4px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:10001;transform:translate(-50%,-50%)}
 
-    .dot-grid {
-      position: fixed; inset: 0; z-index: -6; pointer-events: none;
-      background-image: radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px);
-      background-size: 32px 32px;
-      mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 20%, transparent 75%);
-    }
-    .cursor-glow {
-      position: fixed; width: 400px; height: 400px; border-radius: 50%; pointer-events: none; z-index: -7;
-      background: radial-gradient(circle, rgba(74,240,192,0.04) 0%, transparent 70%);
-      transform: translate(-50%,-50%); transition: opacity 0.4s; opacity: 0;
-    }
-    .cursor-glow.active { opacity: 1; }
+/* BG LAYERS */
+#particleCanvas{position:fixed;inset:0;z-index:-10}
+.mesh-blob{position:fixed;border-radius:50%;pointer-events:none;z-index:-8;filter:blur(120px)}
+.mb1{top:-15%;left:-8%;width:600px;height:600px;background:radial-gradient(circle,rgba(74,240,192,0.1),rgba(56,189,248,0.05) 60%,transparent 80%);animation:m1 24s ease-in-out infinite}
+.mb2{top:35%;right:-12%;width:500px;height:500px;background:radial-gradient(circle,rgba(91,141,248,0.08),rgba(167,139,250,0.04) 60%,transparent 80%);animation:m2 28s ease-in-out infinite}
+.mb3{bottom:-10%;left:25%;width:450px;height:450px;background:radial-gradient(circle,rgba(74,240,192,0.06),rgba(56,189,248,0.03) 60%,transparent 80%);animation:m3 22s ease-in-out infinite}
+@keyframes m1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(50px,40px) scale(1.08)}}
+@keyframes m2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-40px,-50px) scale(1.05)}}
+@keyframes m3{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(30px,-25px) scale(1.1)}}
+.dot-grid{position:fixed;inset:0;z-index:-6;pointer-events:none;
+  background-image:radial-gradient(rgba(255,255,255,0.04) 1px,transparent 1px);background-size:32px 32px;
+  mask-image:radial-gradient(ellipse 70% 60% at 50% 50%,black 20%,transparent 75%)}
+.cursor-glow{position:fixed;width:500px;height:500px;border-radius:50%;pointer-events:none;z-index:-7;
+  background:radial-gradient(circle,rgba(74,240,192,0.04),transparent 70%);transform:translate(-50%,-50%);transition:opacity .4s;opacity:0}
+.cursor-glow.on{opacity:1}
 
-    #progress { position: fixed; top: 0; left: 0; height: 2px; width: 0; z-index: 100; background: linear-gradient(90deg, var(--accent), var(--accent-blue), var(--accent-violet)); box-shadow: 0 0 15px var(--accent-glow); }
+/* PROGRESS BAR */
+#progress{position:fixed;top:0;left:0;height:2px;width:0;z-index:100;background:linear-gradient(90deg,var(--accent),var(--blue),var(--violet));box-shadow:0 0 15px var(--accent-glow)}
 
-    header { position: sticky; top: 0; z-index: 50; border-bottom: 1px solid var(--border); backdrop-filter: blur(24px) saturate(1.5); background: rgba(6,8,13,0.7); }
-    .header-inner { max-width: 1140px; margin: 0 auto; padding: 14px 28px; display: flex; align-items: center; justify-content: space-between; }
-    .logo { font-family: var(--font-display); font-weight: 800; font-size: 20px; letter-spacing: -0.5px; color: var(--text-primary); text-decoration: none; }
-    .logo span { color: var(--accent); }
-    nav { display: flex; gap: 2px; }
-    nav a { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); text-decoration: none; padding: 7px 14px; border-radius: 8px; transition: all 0.3s var(--ease-out); }
-    nav a:hover, nav a.active { color: var(--accent); background: var(--accent-dim); }
+/* HEADER */
+header{position:sticky;top:0;z-index:50;border-bottom:1px solid var(--border);backdrop-filter:blur(24px) saturate(1.5);background:rgba(6,8,13,0.7)}
+.h-inner{max-width:1140px;margin:0 auto;padding:14px 28px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:var(--fd);font-weight:800;font-size:20px;letter-spacing:-.5px;color:var(--t1);text-decoration:none}.logo span{color:var(--accent)}
+nav{display:flex;gap:2px}
+nav a{font-family:var(--fm);font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--t3);text-decoration:none;padding:7px 14px;border-radius:8px;transition:all .3s var(--ease)}
+nav a:hover,nav a.active{color:var(--accent);background:var(--accent-dim)}
 
-    section { padding: 110px 28px; position: relative; }
-    .container { max-width: 1140px; margin: 0 auto; }
-    .reveal { opacity: 0; transform: translateY(50px); transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out); }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-    .reveal-delay-1 { transition-delay: 0.08s; } .reveal-delay-2 { transition-delay: 0.16s; } .reveal-delay-3 { transition-delay: 0.24s; } .reveal-delay-4 { transition-delay: 0.32s; } .reveal-delay-5 { transition-delay: 0.40s; }
+/* SECTIONS */
+section{padding:110px 28px;position:relative}
+.container{max-width:1140px;margin:0 auto}
+.reveal{opacity:0;transform:translateY(50px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.reveal.vis{opacity:1;transform:translateY(0)}
+.rd1{transition-delay:.08s}.rd2{transition-delay:.16s}.rd3{transition-delay:.24s}.rd4{transition-delay:.32s}.rd5{transition-delay:.4s}
 
-    .hero { min-height: 92vh; display: flex; align-items: center; padding-top: 60px; }
-    .hero-grid { display: grid; grid-template-columns: 1fr 360px; gap: 70px; align-items: center; }
-    .status-badge { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); padding: 8px 18px; border: 1px solid rgba(74,240,192,0.15); border-radius: 100px; background: rgba(74,240,192,0.04); margin-bottom: 28px; }
-    .status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); animation: pd 2s ease-in-out infinite; box-shadow: 0 0 8px var(--accent-glow); }
-    @keyframes pd { 0%,100% { box-shadow: 0 0 0 0 var(--accent-glow); } 50% { box-shadow: 0 0 0 10px transparent; } }
-    .hero h1 { font-family: var(--font-display); font-size: clamp(2.8rem,5.5vw,4.2rem); font-weight: 800; line-height: 1.02; letter-spacing: -2.5px; margin-bottom: 10px; }
-    .hero h1 .accent { background: linear-gradient(135deg, var(--accent), var(--accent-blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .hero-role { font-family: var(--font-mono); font-size: 15px; color: var(--text-secondary); margin-bottom: 22px; }
-    .hero-desc { font-size: 16px; color: var(--text-secondary); line-height: 1.75; max-width: 540px; margin-bottom: 36px; }
-    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
-    .btn { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.5px; padding: 13px 26px; border-radius: 10px; text-decoration: none; transition: all 0.35s var(--ease-out); cursor: pointer; border: none; }
-    .btn-primary { background: linear-gradient(135deg, var(--accent), #2dd4a8); color: var(--bg-primary); font-weight: 600; box-shadow: 0 4px 24px rgba(74,240,192,0.2), inset 0 1px 0 rgba(255,255,255,0.15); }
-    .btn-primary:hover { box-shadow: 0 8px 40px rgba(74,240,192,0.35); transform: translateY(-3px); }
-    .btn-ghost { background: rgba(255,255,255,0.03); color: var(--text-primary); border: 1px solid var(--border); backdrop-filter: blur(8px); }
-    .btn-ghost:hover { border-color: var(--border-hover); background: var(--accent-dim); transform: translateY(-2px); }
+/* HERO */
+.hero{min-height:92vh;display:flex;align-items:center;padding-top:60px}
+.hero-grid{display:grid;grid-template-columns:1fr 360px;gap:70px;align-items:center}
+.status-badge{display:inline-flex;align-items:center;gap:10px;font-family:var(--fm);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);padding:8px 18px;border:1px solid rgba(74,240,192,0.15);border-radius:100px;background:var(--accent-dim);margin-bottom:28px}
+.status-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:pd 2s ease-in-out infinite;box-shadow:0 0 8px var(--accent-glow)}
+@keyframes pd{0%,100%{box-shadow:0 0 0 0 var(--accent-glow)}50%{box-shadow:0 0 0 10px transparent}}
+.hero h1{font-family:var(--fd);font-size:clamp(2.8rem,5.5vw,4.2rem);font-weight:800;line-height:1.02;letter-spacing:-2.5px;margin-bottom:10px}
+.hero h1 .accent{background:linear-gradient(135deg,var(--accent),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-role{font-family:var(--fm);font-size:15px;color:var(--t2);margin-bottom:22px}
+.hero-desc{font-size:16px;color:var(--t2);line-height:1.75;max-width:540px;margin-bottom:36px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap}
 
-    .profile-visual { position: relative; }
-    .profile-frame { position: relative; width: 100%; aspect-ratio: 1; border-radius: 22px; overflow: hidden; border: 1px solid var(--border); background: var(--bg-secondary); }
-    .profile-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .profile-frame::after { content: ''; position: absolute; inset: 0; background: linear-gradient(160deg, transparent 50%, rgba(74,240,192,0.08) 100%); }
-    .profile-ring { position: absolute; inset: -3px; border-radius: 25px; z-index: -1; padding: 3px; background: conic-gradient(from 0deg, var(--accent), var(--accent-blue), var(--accent-violet), var(--accent-cyan), var(--accent)); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; animation: rs 6s linear infinite; opacity: 0.5; }
-    @keyframes rs { to { transform: rotate(360deg); } }
-    .profile-glow-bg { position: absolute; inset: -40px; border-radius: 50%; z-index: -2; background: radial-gradient(circle, rgba(74,240,192,0.12) 0%, transparent 65%); filter: blur(30px); }
+/* MAGNETIC BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--fm);font-size:12px;letter-spacing:.5px;padding:13px 26px;border-radius:10px;text-decoration:none;transition:all .35s var(--ease);cursor:pointer;border:none;position:relative;overflow:hidden}
+.btn::after{content:'';position:absolute;inset:0;background:radial-gradient(100px circle at var(--bx,50%) var(--by,50%),rgba(74,240,192,0.15),transparent 60%);opacity:0;transition:opacity .3s}
+.btn:hover::after{opacity:1}
+.btn-primary{background:linear-gradient(135deg,var(--accent),#2dd4a8);color:var(--bg);font-weight:600;box-shadow:0 4px 24px rgba(74,240,192,0.2),inset 0 1px 0 rgba(255,255,255,0.15)}
+.btn-primary:hover{box-shadow:0 8px 40px rgba(74,240,192,0.35);transform:translateY(-3px) scale(1.02)}
+.btn-ghost{background:rgba(255,255,255,0.03);color:var(--t1);border:1px solid var(--border);backdrop-filter:blur(8px)}
+.btn-ghost:hover{border-color:var(--border-h);background:var(--accent-dim);transform:translateY(-2px)}
 
-    .terminal-stats { position: absolute; bottom: -28px; left: -28px; right: 28px; background: rgba(6,8,13,0.92); border: 1px solid var(--border); border-radius: 12px; padding: 16px 20px; font-family: var(--font-mono); font-size: 12px; backdrop-filter: blur(16px); box-shadow: 0 8px 32px rgba(0,0,0,0.4); }
-    .terminal-header { display: flex; gap: 5px; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
-    .terminal-dot { width: 8px; height: 8px; border-radius: 50%; }
-    .terminal-dot:nth-child(1) { background: #ff5f57; } .terminal-dot:nth-child(2) { background: #febc2e; } .terminal-dot:nth-child(3) { background: #28c840; }
-    .terminal-stats .line { margin-bottom: 3px; }
-    .terminal-stats .prompt { color: var(--accent); }
-    .terminal-stats .cmd { color: var(--text-primary); }
-    .terminal-stats .output { color: var(--text-secondary); }
+/* PROFILE */
+.profile-visual{position:relative}
+.profile-frame{position:relative;width:100%;aspect-ratio:1;border-radius:22px;overflow:hidden;border:1px solid var(--border);background:var(--bg2)}
+.profile-frame img{width:100%;height:100%;object-fit:cover;display:block}
+.profile-frame::after{content:'';position:absolute;inset:0;background:linear-gradient(160deg,transparent 50%,rgba(74,240,192,0.08) 100%)}
+.profile-ring{position:absolute;inset:-3px;border-radius:25px;z-index:-1;padding:3px;background:conic-gradient(from 0deg,var(--accent),var(--blue),var(--violet),var(--cyan),var(--accent));-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:rs 6s linear infinite;opacity:.5}
+@keyframes rs{to{transform:rotate(360deg)}}
+.profile-glow{position:absolute;inset:-40px;border-radius:50%;z-index:-2;background:radial-gradient(circle,rgba(74,240,192,0.12),transparent 65%);filter:blur(30px)}
+.terminal-stats{position:absolute;bottom:-28px;left:-28px;right:28px;background:rgba(6,8,13,0.92);border:1px solid var(--border);border-radius:12px;padding:16px 20px;font-family:var(--fm);font-size:12px;backdrop-filter:blur(16px);box-shadow:0 8px 32px rgba(0,0,0,0.4)}
+.t-header{display:flex;gap:5px;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.t-dot{width:8px;height:8px;border-radius:50%}.t-dot:nth-child(1){background:#ff5f57}.t-dot:nth-child(2){background:#febc2e}.t-dot:nth-child(3){background:#28c840}
+.t-line{margin-bottom:3px}.prompt{color:var(--accent)}.cmd{color:var(--t1)}.output{color:var(--t2)}
 
-    .section-label { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 3px; color: var(--accent); margin-bottom: 14px; display: flex; align-items: center; gap: 14px; }
-    .section-label::before { content: ''; width: 28px; height: 1px; background: linear-gradient(90deg, var(--accent), transparent); }
-    .section-title { font-family: var(--font-display); font-size: clamp(2rem,3.5vw,2.8rem); font-weight: 700; letter-spacing: -1.5px; margin-bottom: 52px; }
+/* STATS */
+.stats-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding:0 28px;max-width:1140px;margin:-40px auto 0}
+.stat-card{padding:32px 20px;border-radius:var(--r);border:1px solid var(--border);background:var(--card);backdrop-filter:blur(16px);text-align:center;transition:all .45s var(--ease);position:relative;overflow:hidden}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--accent),transparent);opacity:0;transition:opacity .4s}
+.stat-card:hover{transform:translateY(-5px);border-color:var(--border-h)}.stat-card:hover::before{opacity:1}
+.stat-num{font-family:var(--fd);font-size:42px;font-weight:800;line-height:1;margin-bottom:6px;background:linear-gradient(135deg,var(--accent),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat-label{font-family:var(--fm);font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--t3)}
 
-    .focus-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-    .focus-card { padding: 30px 26px; border-radius: var(--radius); border: 1px solid var(--border); background: var(--bg-card); backdrop-filter: blur(12px); transition: all 0.45s var(--ease-out); position: relative; overflow: hidden; }
-    .focus-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--accent), var(--accent-blue), transparent); opacity: 0; transition: opacity 0.4s; }
-    .focus-card::after { content: ''; position: absolute; inset: 0; background: radial-gradient(300px circle at var(--mx, 50%) var(--my, 50%), rgba(74,240,192,0.04), transparent 60%); pointer-events: none; opacity: 0; transition: opacity 0.4s; }
-    .focus-card:hover { border-color: var(--border-hover); background: var(--bg-card-hover); transform: translateY(-5px); }
-    .focus-card:hover::before { opacity: 1; } .focus-card:hover::after { opacity: 1; }
-    .focus-icon { width: 46px; height: 46px; border-radius: 12px; background: var(--accent-dim); display: flex; align-items: center; justify-content: center; font-size: 20px; margin-bottom: 20px; border: 1px solid rgba(74,240,192,0.08); }
-    .focus-card h3 { font-family: var(--font-display); font-size: 17px; font-weight: 600; margin-bottom: 10px; }
-    .focus-card p { font-size: 13.5px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 16px; }
-    .tags { display: flex; gap: 6px; flex-wrap: wrap; }
-    .tag { font-family: var(--font-mono); font-size: 10px; padding: 4px 10px; border-radius: 6px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); color: var(--text-muted); transition: all 0.3s; }
-    .focus-card:hover .tag { border-color: rgba(74,240,192,0.1); color: var(--text-secondary); }
+/* SECTION HEADINGS */
+.s-label{font-family:var(--fm);font-size:11px;text-transform:uppercase;letter-spacing:3px;color:var(--accent);margin-bottom:14px;display:flex;align-items:center;gap:14px}
+.s-label::before{content:'';width:28px;height:1px;background:linear-gradient(90deg,var(--accent),transparent)}
+.s-title{font-family:var(--fd);font-size:clamp(2rem,3.5vw,2.8rem);font-weight:700;letter-spacing:-1.5px;margin-bottom:52px}
 
-    .timeline { position: relative; padding-left: 44px; }
-    .timeline::before { content: ''; position: absolute; left: 15px; top: 0; bottom: 0; width: 1px; background: linear-gradient(to bottom, var(--accent), var(--accent-blue), var(--border), transparent); }
-    .timeline-item { position: relative; margin-bottom: 36px; }
-    .timeline-dot { position: absolute; left: -36px; top: 28px; width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--accent-blue); background: var(--bg-primary); }
-    .timeline-item.current .timeline-dot { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 16px var(--accent-glow); }
-    .timeline-card { padding: 30px 34px; border-radius: var(--radius); border: 1px solid var(--border); background: var(--bg-card); backdrop-filter: blur(12px); transition: all 0.35s var(--ease-out); }
-    .timeline-card:hover { border-color: var(--border-hover); transform: translateX(4px); }
-    .timeline-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px; margin-bottom: 6px; }
-    .timeline-card h3 { font-family: var(--font-display); font-size: 20px; font-weight: 700; }
-    .timeline-date { font-family: var(--font-mono); font-size: 11px; color: var(--accent); padding: 4px 14px; border-radius: 100px; background: var(--accent-dim); white-space: nowrap; border: 1px solid rgba(74,240,192,0.1); }
-    .timeline-location { font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); margin-bottom: 16px; }
-    .timeline-card ul { list-style: none; }
-    .timeline-card li { font-size: 14px; color: var(--text-secondary); padding: 5px 0 5px 20px; position: relative; line-height: 1.65; }
-    .timeline-card li::before { content: '\2192'; position: absolute; left: 0; color: var(--accent); font-size: 12px; }
+/* GLASSMORPHISM FOCUS CARDS */
+.focus-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.focus-card{padding:30px 26px;border-radius:var(--r);border:1px solid var(--border);background:var(--card);backdrop-filter:blur(12px);transition:all .45s var(--ease);position:relative;overflow:hidden}
+.focus-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--accent),var(--blue),transparent);opacity:0;transition:opacity .4s}
+.focus-card::after{content:'';position:absolute;inset:0;background:radial-gradient(300px circle at var(--mx,50%) var(--my,50%),rgba(74,240,192,0.04),transparent 60%);pointer-events:none;opacity:0;transition:opacity .4s}
+.focus-card:hover{border-color:var(--border-h);background:var(--card-h);transform:translateY(-5px)}.focus-card:hover::before{opacity:1}.focus-card:hover::after{opacity:1}
+.focus-icon{width:46px;height:46px;border-radius:12px;background:var(--accent-dim);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:20px;border:1px solid rgba(74,240,192,0.08)}
+.focus-card h3{font-family:var(--fd);font-size:17px;font-weight:600;margin-bottom:10px}
+.focus-card p{font-size:13.5px;color:var(--t2);line-height:1.7;margin-bottom:16px}
+.tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-family:var(--fm);font-size:10px;padding:4px 10px;border-radius:6px;background:rgba(255,255,255,0.03);border:1px solid var(--border);color:var(--t3);transition:all .3s}
+.focus-card:hover .tag,.proj-card:hover .tag,.blog-item:hover .tag{border-color:rgba(74,240,192,0.1);color:var(--t2)}
 
-    .projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-    .project-card { padding: 30px 26px; border-radius: var(--radius); border: 1px solid var(--border); background: var(--bg-card); backdrop-filter: blur(12px); transition: all 0.45s var(--ease-out); position: relative; overflow: hidden; display: flex; flex-direction: column; }
-    .project-card:hover { border-color: var(--border-hover); transform: translateY(-5px); }
-    .project-card:hover .project-num { color: rgba(74,240,192,0.15); }
-    .project-num { font-family: var(--font-display); font-size: 52px; font-weight: 800; color: rgba(74,240,192,0.04); position: absolute; top: 10px; right: 18px; line-height: 1; transition: color 0.4s; }
-    .project-card h3 { font-family: var(--font-display); font-size: 17px; font-weight: 600; margin-bottom: 10px; position: relative; }
-    .project-card p { font-size: 13.5px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 16px; flex: 1; }
+/* TIMELINE */
+.timeline{position:relative;padding-left:44px}
+.timeline::before{content:'';position:absolute;left:15px;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,var(--accent),var(--blue),var(--border),transparent)}
+.tl-item{position:relative;margin-bottom:36px}
+.tl-dot{position:absolute;left:-36px;top:28px;width:12px;height:12px;border-radius:50%;border:2px solid var(--blue);background:var(--bg)}
+.tl-item.current .tl-dot{background:var(--accent);border-color:var(--accent);box-shadow:0 0 16px var(--accent-glow)}
+.tl-card{padding:30px 34px;border-radius:var(--r);border:1px solid var(--border);background:var(--card);backdrop-filter:blur(12px);transition:all .35s var(--ease)}
+.tl-card:hover{border-color:var(--border-h);transform:translateX(4px)}
+.tl-head{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;margin-bottom:6px}
+.tl-card h3{font-family:var(--fd);font-size:20px;font-weight:700}
+.tl-date{font-family:var(--fm);font-size:11px;color:var(--accent);padding:4px 14px;border-radius:100px;background:var(--accent-dim);white-space:nowrap;border:1px solid rgba(74,240,192,0.1)}
+.tl-loc{font-family:var(--fm);font-size:12px;color:var(--t3);margin-bottom:16px}
+.level{display:inline-block;font-family:var(--fm);font-size:10px;padding:3px 10px;border-radius:5px;font-weight:600;letter-spacing:.5px;margin-left:8px;vertical-align:middle}
+.l1{background:rgba(91,141,248,0.12);color:var(--blue);border:1px solid rgba(91,141,248,0.25)}
+.l3{background:rgba(74,240,192,0.12);color:var(--accent);border:1px solid rgba(74,240,192,0.25)}
+.tl-card ul{list-style:none}.tl-card li{font-size:14px;color:var(--t2);padding:5px 0 5px 20px;position:relative;line-height:1.65}
+.tl-card li::before{content:'\2192';position:absolute;left:0;color:var(--accent);font-size:12px}
 
-    .skills-container { display: flex; flex-direction: column; gap: 22px; }
-    .skill-row { display: flex; align-items: center; gap: 18px; }
-    .skill-category { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-muted); width: 120px; flex-shrink: 0; text-align: right; }
-    .skill-items { display: flex; gap: 8px; flex-wrap: wrap; }
-    .skill-tag { font-family: var(--font-mono); font-size: 12px; padding: 8px 16px; border-radius: 8px; background: var(--bg-card); border: 1px solid var(--border); color: var(--text-primary); transition: all 0.35s var(--ease-out); }
-    .skill-tag:hover { border-color: var(--border-hover); background: var(--accent-dim); color: var(--accent); transform: translateY(-3px); box-shadow: 0 4px 16px rgba(74,240,192,0.1); }
+/* PROJECTS */
+.proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.proj-card{padding:30px 26px;border-radius:var(--r);border:1px solid var(--border);background:var(--card);backdrop-filter:blur(12px);transition:all .45s var(--ease);position:relative;overflow:hidden;display:flex;flex-direction:column}
+.proj-card::after{content:'';position:absolute;inset:0;background:radial-gradient(300px circle at var(--mx,50%) var(--my,50%),rgba(74,240,192,0.04),transparent 60%);pointer-events:none;opacity:0;transition:opacity .4s}
+.proj-card:hover{border-color:var(--border-h);transform:translateY(-5px)}.proj-card:hover::after{opacity:1}
+.proj-num{font-family:var(--fd);font-size:52px;font-weight:800;color:rgba(74,240,192,0.04);position:absolute;top:10px;right:18px;line-height:1;transition:color .4s}
+.proj-card:hover .proj-num{color:rgba(74,240,192,0.15)}
+.proj-card h3{font-family:var(--fd);font-size:17px;font-weight:600;margin-bottom:10px;position:relative}
+.proj-card p{font-size:13.5px;color:var(--t2);line-height:1.7;margin-bottom:16px;flex:1}
 
-    .certs-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
-    .cert-card { padding: 28px; border-radius: var(--radius); border: 1px solid var(--border); background: var(--bg-card); backdrop-filter: blur(12px); display: flex; gap: 20px; align-items: flex-start; transition: all 0.35s var(--ease-out); }
-    .cert-card:hover { border-color: var(--border-hover); transform: translateY(-3px); }
-    .cert-badge { width: 54px; height: 54px; border-radius: 14px; flex-shrink: 0; background: linear-gradient(135deg, var(--accent-dim), rgba(91,141,248,0.08)); border: 1px solid rgba(74,240,192,0.1); display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-weight: 700; font-size: 13px; color: var(--accent); }
-    .cert-card h3 { font-family: var(--font-display); font-size: 15px; font-weight: 600; margin-bottom: 6px; }
-    .cert-card p { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); line-height: 1.5; }
+/* SKILLS */
+.skills-wrap{display:flex;flex-direction:column;gap:22px}
+.sk-row{display:flex;align-items:center;gap:18px}
+.sk-cat{font-family:var(--fm);font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--t3);width:120px;flex-shrink:0;text-align:right}
+.sk-items{display:flex;gap:8px;flex-wrap:wrap}
+.sk-tag{font-family:var(--fm);font-size:12px;padding:8px 16px;border-radius:8px;background:var(--card);border:1px solid var(--border);color:var(--t1);transition:all .35s var(--ease)}
+.sk-tag:hover{border-color:var(--border-h);background:var(--accent-dim);color:var(--accent);transform:translateY(-3px);box-shadow:0 4px 16px rgba(74,240,192,0.1)}
 
-    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
-    .contact-links { display: flex; flex-direction: column; gap: 12px; }
-    .contact-link { display: flex; align-items: center; gap: 16px; padding: 18px 24px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg-card); text-decoration: none; color: var(--text-primary); font-family: var(--font-mono); font-size: 13px; transition: all 0.35s var(--ease-out); }
-    .contact-link:hover { border-color: var(--border-hover); background: var(--accent-dim); transform: translateX(6px); }
-    .contact-link .icon { font-size: 18px; }
-    .contact-form { padding: 34px; border-radius: var(--radius); border: 1px solid var(--border); background: var(--bg-card); backdrop-filter: blur(12px); }
-    .form-group { margin-bottom: 16px; }
-    .form-group label { display: block; font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 8px; }
-    .form-group input, .form-group textarea { width: 100%; padding: 12px 16px; border-radius: 10px; border: 1px solid var(--border); background: rgba(255,255,255,0.02); color: var(--text-primary); font-family: var(--font-body); font-size: 14px; outline: none; transition: all 0.3s; }
-    .form-group input:focus, .form-group textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(74,240,192,0.08); }
-    .form-group textarea { resize: vertical; min-height: 120px; }
+/* CERTS */
+.certs-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.cert-card{padding:28px;border-radius:var(--r);border:1px solid var(--border);background:var(--card);backdrop-filter:blur(12px);display:flex;gap:20px;align-items:flex-start;transition:all .35s var(--ease)}
+.cert-card:hover{border-color:var(--border-h);transform:translateY(-3px)}
+.cert-badge{width:54px;height:54px;border-radius:14px;flex-shrink:0;background:linear-gradient(135deg,var(--accent-dim),rgba(91,141,248,0.08));border:1px solid rgba(74,240,192,0.1);display:flex;align-items:center;justify-content:center;font-family:var(--fm);font-weight:700;font-size:13px;color:var(--accent)}
+.cert-card h3{font-family:var(--fd);font-size:15px;font-weight:600;margin-bottom:6px}
+.cert-card p{font-family:var(--fm);font-size:11px;color:var(--t3);line-height:1.5}
 
-    .ticker-wrap { overflow: hidden; padding: 18px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin: 80px 0; background: rgba(74,240,192,0.01); }
-    .ticker { display: flex; gap: 60px; white-space: nowrap; animation: tk 35s linear infinite; font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2.5px; }
-    .ticker span { display: flex; align-items: center; gap: 12px; }
-    .ticker .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--accent); flex-shrink: 0; box-shadow: 0 0 6px var(--accent-glow); }
-    @keyframes tk { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+/* WRITEUPS */
+.blog-item{display:grid;grid-template-columns:120px 1fr;gap:24px;padding:28px;border-radius:var(--r);border:1px solid var(--border);background:var(--card);backdrop-filter:blur(12px);transition:all .45s var(--ease);cursor:pointer;margin-bottom:12px}
+.blog-item:hover{border-color:var(--border-h);transform:translateX(6px);background:var(--card-h)}
+.blog-year{font-family:var(--fm);font-size:11px;color:var(--t3);padding-top:4px}
+.blog-body h3{font-family:var(--fd);font-size:17px;font-weight:600;margin-bottom:8px;transition:color .3s;display:flex;align-items:center;gap:8px}
+.blog-item:hover .blog-body h3{color:var(--accent)}
+.blog-body h3 .arrow{font-size:13px;transition:transform .3s}.blog-item:hover .blog-body h3 .arrow{transform:translate(4px,-4px)}
+.blog-body p{font-size:13.5px;color:var(--t2);line-height:1.7;margin-bottom:12px}
 
-    footer { border-top: 1px solid var(--border); padding: 44px 28px; }
-    .footer-inner { max-width: 1140px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
-    .footer-links { display: flex; gap: 24px; }
-    .footer-links a { color: var(--text-secondary); text-decoration: none; transition: color 0.3s; }
-    .footer-links a:hover { color: var(--accent); }
+/* CONTACT */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+.contact-links{display:flex;flex-direction:column;gap:12px}
+.contact-link{display:flex;align-items:center;gap:16px;padding:18px 24px;border-radius:12px;border:1px solid var(--border);background:var(--card);text-decoration:none;color:var(--t1);font-family:var(--fm);font-size:13px;transition:all .35s var(--ease)}
+.contact-link:hover{border-color:var(--border-h);background:var(--accent-dim);transform:translateX(6px)}
+.contact-link .icon{font-size:18px}
+.contact-form{padding:34px;border-radius:var(--r);border:1px solid var(--border);background:var(--card);backdrop-filter:blur(12px)}
+.fg{margin-bottom:16px}
+.fg label{display:block;font-family:var(--fm);font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--t3);margin-bottom:8px}
+.fg input,.fg textarea{width:100%;padding:12px 16px;border-radius:10px;border:1px solid var(--border);background:rgba(255,255,255,0.02);color:var(--t1);font-family:var(--fb);font-size:14px;outline:none;transition:all .3s}
+.fg input:focus,.fg textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(74,240,192,0.08)}
+.fg textarea{resize:vertical;min-height:120px}
 
-    .mobile-menu-btn { display: none; background: none; border: none; color: var(--text-primary); font-size: 22px; cursor: pointer; }
-    @media (max-width: 900px) {
-      .mobile-menu-btn { display: block; }
-      .hero-grid { grid-template-columns: 1fr; gap: 48px; }
-      .profile-visual { max-width: 280px; margin: 0 auto; }
-      .focus-grid, .projects-grid { grid-template-columns: 1fr; }
-      .certs-grid, .contact-grid { grid-template-columns: 1fr; }
-      nav { display: none; }
-      .skill-row { flex-direction: column; align-items: flex-start; gap: 8px; }
-      .skill-category { text-align: left; width: auto; }
-      .terminal-stats { left: 0; right: 0; bottom: -24px; }
-      section { padding: 80px 20px; }
-    }
-    @media (max-width: 480px) { .hero h1 { font-size: 2.2rem; letter-spacing: -1.5px; } }
-  </style>
+/* TICKER */
+.ticker-wrap{overflow:hidden;padding:18px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin:80px 0;background:rgba(74,240,192,0.01)}
+.ticker{display:flex;gap:60px;white-space:nowrap;animation:tk 35s linear infinite;font-family:var(--fm);font-size:12px;color:var(--t3);text-transform:uppercase;letter-spacing:2.5px}
+.ticker span{display:flex;align-items:center;gap:12px}
+.ticker .dot{width:4px;height:4px;border-radius:50%;background:var(--accent);flex-shrink:0;box-shadow:0 0 6px var(--accent-glow)}
+@keyframes tk{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:44px 28px}
+.f-inner{max-width:1140px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;font-family:var(--fm);font-size:11px;color:var(--t3)}
+.f-links{display:flex;gap:24px}.f-links a{color:var(--t2);text-decoration:none;transition:color .3s}.f-links a:hover{color:var(--accent)}
+
+/* MOBILE */
+.mob-btn{display:none;background:none;border:none;color:var(--t1);font-size:22px;cursor:pointer}
+@media(max-width:900px){
+  .mob-btn{display:block}.hero-grid{grid-template-columns:1fr;gap:48px}.profile-visual{max-width:280px;margin:0 auto}
+  .focus-grid,.proj-grid{grid-template-columns:1fr}.certs-grid,.contact-grid{grid-template-columns:1fr}
+  .stats-strip{grid-template-columns:repeat(2,1fr);margin-top:-20px}nav{display:none}
+  .sk-row{flex-direction:column;align-items:flex-start;gap:8px}.sk-cat{text-align:left;width:auto}
+  .terminal-stats{left:0;right:0;bottom:-24px}section{padding:80px 20px}
+  .blog-item{grid-template-columns:1fr}.cursor,.cursor-dot{display:none!important}
+}
+@media(max-width:480px){.hero h1{font-size:2.2rem;letter-spacing:-1.5px}.stats-strip{grid-template-columns:1fr 1fr;gap:10px}.stat-card{padding:22px 14px}.stat-num{font-size:32px}}
+</style>
 </head>
 <body>
-  <canvas id="particleCanvas"></canvas>
-  <div class="dot-grid"></div>
-  <div class="mesh-blob mesh-blob-1"></div>
-  <div class="mesh-blob mesh-blob-2"></div>
-  <div class="mesh-blob mesh-blob-3"></div>
-  <div class="cursor-glow" id="cursorGlow"></div>
-  <div id="progress"></div>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+<canvas id="particleCanvas"></canvas>
+<div class="dot-grid"></div>
+<div class="mesh-blob mb1"></div>
+<div class="mesh-blob mb2"></div>
+<div class="mesh-blob mb3"></div>
+<div class="cursor-glow" id="cursorGlow"></div>
+<div id="progress"></div>
 
-  <header>
-    <div class="header-inner">
-      <a href="#about" class="logo">Mahesh<span>.</span></a>
-      <nav>
-        <a href="#about">About</a>
-        <a href="#cyber">Focus</a>
-        <a href="#experience">Experience</a>
-        <a href="#projects">Projects</a>
-        <a href="#skills">Skills</a>
-        <a href="#certs">Certs</a>
-        <a href="#contact">Contact</a>
-      </nav>
-      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">&#9776;</button>
-    </div>
-  </header>
+<header>
+  <div class="h-inner">
+    <a href="#about" class="logo">Mahesh<span>.</span></a>
+    <nav id="mainNav"><a href="#about">About</a><a href="#cyber">Focus</a><a href="#experience">Experience</a><a href="#projects">Projects</a><a href="#skills">Skills</a><a href="#certs">Certs</a><a href="#blog">Writeups</a><a href="#contact">Contact</a></nav>
+    <button class="mob-btn" id="mobBtn" aria-label="Menu">&#9776;</button>
+  </div>
+</header>
 
-  <main>
-    <section class="hero" id="about">
-      <div class="container">
-        <div class="hero-grid">
-          <div>
-            <div class="status-badge reveal">
-              <span class="status-dot"></span>
-              <span>Defensive Security &#8226; Detection Engineering</span>
-            </div>
-            <h1 class="reveal reveal-delay-1">Mahesh Babu<br><span class="accent">Pentapati</span></h1>
-            <p class="hero-role reveal reveal-delay-2">SOC Analyst &#8212; FortiSIEM / FortiSOAR / QRadar</p>
-            <p class="hero-desc reveal reveal-delay-3">Cybersecurity professional with 3+ years in SOC operations across enterprise and BFSI environments. Specialized in SIEM/SOAR engineering, detection development, threat hunting, and incident response &#8212; currently securing 120+ organizations at a CERT-In empanelled MSSP.</p>
-            <div class="hero-actions reveal reveal-delay-4">
-              <a href="mailto:maheshbabu.soc7@gmail.com" class="btn btn-primary">&#9993; Get in Touch</a>
-              <a href="assets/resume.pdf" download class="btn btn-ghost">&#8595; Download R&#233;sum&#233;</a>
-              <a href="tel:+917670866926" class="btn btn-ghost">&#128222; Call</a>
-            </div>
-          </div>
-          <div class="profile-visual reveal reveal-delay-3">
-            <div class="profile-glow-bg"></div>
-            <div class="profile-frame">
-              <div class="profile-ring"></div>
-              <img src="assets/profile.jpg" alt="Mahesh Babu Pentapati" />
-            </div>
-            <div class="terminal-stats">
-              <div class="terminal-header"><span class="terminal-dot"></span><span class="terminal-dot"></span><span class="terminal-dot"></span></div>
-              <div class="line"><span class="prompt">$</span> <span class="cmd">whoami</span></div>
-              <div class="line"><span class="output">mahesh@soc ~ detection-engineer</span></div>
-              <div class="line"><span class="prompt">$</span> <span class="cmd">uptime</span></div>
-              <div class="line"><span class="output">3+ yrs in SOC operations</span></div>
-            </div>
+<main>
+  <!-- HERO -->
+  <section class="hero" id="about">
+    <div class="container">
+      <div class="hero-grid">
+        <div>
+          <div class="status-badge reveal"><span class="status-dot"></span><span>Defensive Security &#8226; Detection Engineering</span></div>
+          <h1 class="reveal rd1"><span class="scramble" data-text="Mahesh Babu">Mahesh Babu</span><br><span class="accent scramble" data-text="Pentapati">Pentapati</span></h1>
+          <p class="hero-role reveal rd2">L3 Senior SOC Analyst &#8212; FortiSIEM / FortiSOAR / QRadar</p>
+          <p class="hero-desc reveal rd3">Cybersecurity professional with 3+ years in SOC operations across enterprise and BFSI environments. Specialized in SIEM/SOAR engineering, detection development, threat hunting, and incident response &#8212; currently securing 120+ organizations at a CERT-In empanelled MSSP.</p>
+          <div class="hero-actions reveal rd4">
+            <a href="mailto:maheshbabu.soc7@gmail.com" class="btn btn-primary magnetic">&#9993; Get in Touch</a>
+            <a href="assets/resume.pdf" download class="btn btn-ghost magnetic">&#8595; Download R&#233;sum&#233;</a>
+            <a href="tel:+917670866926" class="btn btn-ghost magnetic">&#128222; Call</a>
           </div>
         </div>
-      </div>
-    </section>
-
-    <div class="ticker-wrap">
-      <div class="ticker">
-        <span><span class="dot"></span>THREAT HUNTING</span><span><span class="dot"></span>DETECTION ENGINEERING</span><span><span class="dot"></span>INCIDENT RESPONSE</span><span><span class="dot"></span>DIGITAL FORENSICS</span><span><span class="dot"></span>FORTISIEM</span><span><span class="dot"></span>FORTISOAR</span><span><span class="dot"></span>QRADAR</span><span><span class="dot"></span>MITRE ATT&amp;CK</span><span><span class="dot"></span>SOAR AUTOMATION</span><span><span class="dot"></span>LOG ANALYSIS</span><span><span class="dot"></span>PACKET ANALYSIS</span><span><span class="dot"></span>PYTHON</span><span><span class="dot"></span>BFSI SECURITY</span><span><span class="dot"></span>CERT-IN</span>
-        <span><span class="dot"></span>THREAT HUNTING</span><span><span class="dot"></span>DETECTION ENGINEERING</span><span><span class="dot"></span>INCIDENT RESPONSE</span><span><span class="dot"></span>DIGITAL FORENSICS</span><span><span class="dot"></span>FORTISIEM</span><span><span class="dot"></span>FORTISOAR</span><span><span class="dot"></span>QRADAR</span><span><span class="dot"></span>MITRE ATT&amp;CK</span><span><span class="dot"></span>SOAR AUTOMATION</span><span><span class="dot"></span>LOG ANALYSIS</span><span><span class="dot"></span>PACKET ANALYSIS</span><span><span class="dot"></span>PYTHON</span><span><span class="dot"></span>BFSI SECURITY</span><span><span class="dot"></span>CERT-IN</span>
+        <div class="profile-visual reveal rd3">
+          <div class="profile-glow"></div>
+          <div class="profile-frame"><div class="profile-ring"></div><img src="assets/profile.jpg" alt="Mahesh Babu Pentapati"/></div>
+          <div class="terminal-stats">
+            <div class="t-header"><span class="t-dot"></span><span class="t-dot"></span><span class="t-dot"></span></div>
+            <div class="t-line"><span class="prompt">$</span> <span class="cmd">whoami</span></div>
+            <div class="t-line"><span class="output">mahesh@soc ~ L3-detection-engineer</span></div>
+            <div class="t-line"><span class="prompt">$</span> <span class="cmd">uptime</span></div>
+            <div class="t-line"><span class="output">3+ yrs | Mastercard &#8594; TechOwl InfoSec</span></div>
+          </div>
+        </div>
       </div>
     </div>
+  </section>
 
-    <section id="cyber">
-      <div class="container">
-        <div class="section-label reveal">Focus Areas</div>
-        <h2 class="section-title reveal reveal-delay-1">Cyber Focus</h2>
-        <div class="focus-grid">
-          <div class="focus-card reveal reveal-delay-1"><div class="focus-icon">&#9889;</div><h3>Detection Engineering</h3><p>Author high-fidelity correlation rules, custom parsers, and regex-based detection logic in FortiSIEM &amp; QRadar. Focus on minimizing false positives through aggregation windows, threshold tuning, and anti-evasion patterns aligned to MITRE ATT&amp;CK TTPs.</p><div class="tags"><span class="tag">ATT&amp;CK TTPs</span><span class="tag">Noise Control</span><span class="tag">Correlation Rules</span><span class="tag">Parser Dev</span></div></div>
-          <div class="focus-card reveal reveal-delay-2"><div class="focus-icon">&#128293;</div><h3>Incident Response &amp; Triage</h3><p>First-responder triage across L1/L2 escalation workflows. Rapid scoping through process trees, network pivots, and identity correlation. Execute structured playbooks for phishing, ransomware, brute-force, and lateral movement scenarios.</p><div class="tags"><span class="tag">Triage</span><span class="tag">Containment</span><span class="tag">IR Playbooks</span><span class="tag">RCA</span></div></div>
-          <div class="focus-card reveal reveal-delay-3"><div class="focus-icon">&#128269;</div><h3>Cyber Threat Hunting</h3><p>Hypothesis-driven hunts across endpoint, network, and identity telemetry. Proactive searches for persistence mechanisms, C2 beaconing, credential abuse, and living-off-the-land techniques using FortiSIEM queries and log deep-dives.</p><div class="tags"><span class="tag">IOC Sweeps</span><span class="tag">Behavioral Analysis</span><span class="tag">LOLBins</span></div></div>
-          <div class="focus-card reveal reveal-delay-1"><div class="focus-icon">&#127919;</div><h3>Adversary Emulation</h3><p>Safe attack simulations to validate detection coverage &#8212; PowerShell download cradles, PsExec lateral movement, MSHTA abuse, Ngrok tunneling, and credential dumping scenarios mapped to ATT&amp;CK techniques.</p><div class="tags"><span class="tag">Atomic Red Team</span><span class="tag">Caldera</span><span class="tag">Purple Teaming</span></div></div>
-          <div class="focus-card reveal reveal-delay-2"><div class="focus-icon">&#128202;</div><h3>SIEM / SOAR Engineering</h3><p>End-to-end FortiSIEM deployments &#8212; log source onboarding, event normalization, custom data models, and executive dashboards. FortiSOAR playbook development for automated enrichment, ticketing, and response orchestration.</p><div class="tags"><span class="tag">FortiSIEM</span><span class="tag">FortiSOAR</span><span class="tag">Dashboards</span><span class="tag">Automation</span></div></div>
-          <div class="focus-card reveal reveal-delay-3"><div class="focus-icon">&#129504;</div><h3>Threat Intel &amp; Enrichment</h3><p>Automated IOC enrichment pipelines using AbuseIPDB, VirusTotal, and OSINT feeds. Risk scoring integration into SIEM alerts for context-aware triage and faster analyst decision-making.</p><div class="tags"><span class="tag">AbuseIPDB</span><span class="tag">VirusTotal</span><span class="tag">OSINT</span><span class="tag">Risk Scoring</span></div></div>
-          <div class="focus-card reveal reveal-delay-1"><div class="focus-icon">&#128300;</div><h3>Digital Forensics</h3><p>Post-incident artifact collection and evidence preservation. Windows event log analysis, memory forensics basics, timeline reconstruction, and chain-of-custody documentation for IR investigations.</p><div class="tags"><span class="tag">Log Analysis</span><span class="tag">Timeline</span><span class="tag">Evidence</span><span class="tag">Artifacts</span></div></div>
-          <div class="focus-card reveal reveal-delay-2"><div class="focus-icon">&#128737;</div><h3>Log Source Integration</h3><p>Onboard and normalize diverse log sources &#8212; firewalls, WAF, AD/LDAP, Windows Event Logs, EDR (Trend Vision One), cloud services, and network devices into unified SIEM schemas for cross-source correlation.</p><div class="tags"><span class="tag">Syslog</span><span class="tag">WMI/WEC</span><span class="tag">API Pulls</span><span class="tag">Normalization</span></div></div>
-          <div class="focus-card reveal reveal-delay-3"><div class="focus-icon">&#128203;</div><h3>Compliance &amp; Reporting</h3><p>RBI advisory compliance documentation for banking clients. Evidence-ready summaries, CERT-In incident reporting, retention posture audits, and periodic security review reports for BFSI organizations.</p><div class="tags"><span class="tag">RBI</span><span class="tag">CERT-In</span><span class="tag">BFSI Audits</span><span class="tag">MIS Reports</span></div></div>
-        </div>
-      </div>
-    </section>
+  <!-- IMPACT STATS -->
+  <div class="stats-strip">
+    <div class="stat-card reveal rd1"><div class="stat-num" data-target="120">0</div><div class="stat-label">Orgs Protected</div></div>
+    <div class="stat-card reveal rd2"><div class="stat-num" data-target="500">0</div><div class="stat-label">Rules Authored</div></div>
+    <div class="stat-card reveal rd3"><div class="stat-num" data-target="3">0</div><div class="stat-label">Years in SOC</div></div>
+    <div class="stat-card reveal rd4"><div class="stat-num" data-target="24">0</div><div class="stat-label">x7 Monitoring</div></div>
+  </div>
 
-    <section id="experience">
-      <div class="container">
-        <div class="section-label reveal">Career</div>
-        <h2 class="section-title reveal reveal-delay-1">Experience</h2>
-        <div class="timeline">
-          <div class="timeline-item current reveal reveal-delay-1">
-            <div class="timeline-dot"></div>
-            <div class="timeline-card">
-              <div class="timeline-header"><h3>SOC Analyst &#8212; TechOwl InfoSec Pvt. Ltd.</h3><span class="timeline-date">Jun 2025 &#8212; Present</span></div>
-              <div class="timeline-location">Surat, Gujarat, India &#8226; On-site &#8226; CERT-In Empanelled MSSP</div>
-              <ul>
-                <li>Monitor and respond to security incidents across 120+ client organizations in the BFSI, government, and enterprise sectors via 24x7 SOC operations</li>
-                <li>Engineer FortiSIEM correlation rules, custom parsers, and detection logic for multi-tenant environments &#8212; tuning for fidelity and minimizing false positives</li>
-                <li>Develop FortiSOAR playbooks for automated incident enrichment, threat intel lookups (AbuseIPDB, VirusTotal), and ITSM ticket creation</li>
-                <li>Conduct proactive threat hunts across endpoint, firewall, and AD logs &#8212; hunting for persistence, credential abuse, C2 beaconing, and lateral movement</li>
-                <li>Onboard and normalize diverse log sources &#8212; FortiGate, Windows Event Logs, Active Directory, WAF, EDR (Trend Vision One), and network devices</li>
-                <li>Build executive-level security dashboards and MIS reports for client stakeholders and compliance teams</li>
-                <li>Prepare RBI advisory compliance documentation and CERT-In incident reports for banking clients</li>
-                <li>Perform forensic log analysis during post-incident investigations &#8212; timeline reconstruction, artifact collection, and root cause documentation</li>
-              </ul>
-            </div>
-          </div>
-          <div class="timeline-item reveal reveal-delay-2">
-            <div class="timeline-dot"></div>
-            <div class="timeline-card">
-              <div class="timeline-header"><h3>SOC Analyst &#8212; Mastercard</h3><span class="timeline-date">Sep 2022 &#8212; Jun 2025</span></div>
-              <div class="timeline-location">Pune, Maharashtra, India</div>
-              <ul>
-                <li>Monitored global infrastructure using IBM QRadar SIEM &#8212; triaging alerts across network, endpoint, and identity event sources</li>
-                <li>Tuned correlation rules and offense management to reduce false positive rates and improve SOC analyst efficiency</li>
-                <li>Investigated phishing campaigns, brute-force attacks, suspicious authentication patterns, and policy violations across enterprise environments</li>
-                <li>Participated in global SOC threat hunting exercises &#8212; proactive searches for APT indicators, anomalous DNS patterns, and unauthorized lateral movement</li>
-                <li>Performed packet-level analysis using Wireshark for deep-dive network investigations during incident response</li>
-                <li>Collaborated with IR teams on structured incident response procedures &#8212; scoping, containment, eradication, and post-incident reporting</li>
-                <li>Documented detection gaps and proposed new use cases aligned to MITRE ATT&amp;CK framework for continuous coverage improvement</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+  <!-- TICKER -->
+  <div class="ticker-wrap"><div class="ticker">
+    <span><span class="dot"></span>THREAT HUNTING</span><span><span class="dot"></span>DETECTION ENGINEERING</span><span><span class="dot"></span>INCIDENT RESPONSE</span><span><span class="dot"></span>DIGITAL FORENSICS</span><span><span class="dot"></span>FORTISIEM</span><span><span class="dot"></span>FORTISOAR</span><span><span class="dot"></span>QRADAR</span><span><span class="dot"></span>MITRE ATT&amp;CK</span><span><span class="dot"></span>SOAR AUTOMATION</span><span><span class="dot"></span>LOG ANALYSIS</span><span><span class="dot"></span>PACKET ANALYSIS</span><span><span class="dot"></span>PYTHON</span><span><span class="dot"></span>BFSI SECURITY</span><span><span class="dot"></span>CERT-IN</span>
+    <span><span class="dot"></span>THREAT HUNTING</span><span><span class="dot"></span>DETECTION ENGINEERING</span><span><span class="dot"></span>INCIDENT RESPONSE</span><span><span class="dot"></span>DIGITAL FORENSICS</span><span><span class="dot"></span>FORTISIEM</span><span><span class="dot"></span>FORTISOAR</span><span><span class="dot"></span>QRADAR</span><span><span class="dot"></span>MITRE ATT&amp;CK</span><span><span class="dot"></span>SOAR AUTOMATION</span><span><span class="dot"></span>LOG ANALYSIS</span><span><span class="dot"></span>PACKET ANALYSIS</span><span><span class="dot"></span>PYTHON</span><span><span class="dot"></span>BFSI SECURITY</span><span><span class="dot"></span>CERT-IN</span>
+  </div></div>
 
-    <section id="projects">
-      <div class="container">
-        <div class="section-label reveal">Work</div>
-        <h2 class="section-title reveal reveal-delay-1">Selected Projects</h2>
-        <div class="projects-grid">
-          <div class="project-card reveal reveal-delay-1"><span class="project-num">01</span><h3>SQL Injection Detection Suite</h3><p>Multi-layered regex detection for time-based blind, boolean-based, UNION-based, and obfuscated SQLi payloads. Includes aggregation windows for burst detection, noise suppression for scanners, and ATT&amp;CK T1190 mapping.</p><div class="tags"><span class="tag">FortiSIEM</span><span class="tag">Regex</span><span class="tag">WAF Logs</span><span class="tag">ATT&amp;CK</span></div></div>
-          <div class="project-card reveal reveal-delay-2"><span class="project-num">02</span><h3>Windows DNS Exfiltration Hunt</h3><p>Correlation of DNS query/response pairs (Event IDs 256/257/260/261) to detect pointer loops, NXDOMAIN bursts, high-entropy subdomain queries, and potential data exfiltration via DNS tunneling.</p><div class="tags"><span class="tag">Threat Hunting</span><span class="tag">DNS Analytics</span><span class="tag">Exfiltration</span></div></div>
-          <div class="project-card reveal reveal-delay-3"><span class="project-num">03</span><h3>Credential Abuse &amp; Brute-Force Detection</h3><p>Detection rules for distributed brute-force, password spraying, impossible travel, and credential stuffing across AD/LDAP and VPN logs. Threshold-based alerting with account lockout correlation.</p><div class="tags"><span class="tag">Active Directory</span><span class="tag">T1110</span><span class="tag">FortiSIEM</span></div></div>
-          <div class="project-card reveal reveal-delay-1"><span class="project-num">04</span><h3>FortiSOAR IR Playbook Automation</h3><p>End-to-end incident response playbooks &#8212; auto-enrichment via AbuseIPDB/VT, dynamic severity assignment, ITSM ticket creation, analyst notification, and SLA tracking for BFSI SOC operations.</p><div class="tags"><span class="tag">FortiSOAR</span><span class="tag">Automation</span><span class="tag">ITSM</span><span class="tag">Playbooks</span></div></div>
-          <div class="project-card reveal reveal-delay-2"><span class="project-num">05</span><h3>Ransomware Forensic Investigation</h3><p>Post-incident forensic analysis &#8212; Windows Event Log deep-dive, lateral movement timeline reconstruction, persistence mechanism identification, IOC extraction, and CERT-In reporting for affected banking client.</p><div class="tags"><span class="tag">Forensics</span><span class="tag">Timeline</span><span class="tag">IOC Extraction</span><span class="tag">CERT-In</span></div></div>
-          <div class="project-card reveal reveal-delay-3"><span class="project-num">06</span><h3>Trend Vision One Telemetry Normalization</h3><p>Unified SIEM schema mapping for Trend Vision One EDR telemetry &#8212; field normalization, event categorization, and custom dashboards for endpoint visibility across multi-tenant FortiSIEM deployments.</p><div class="tags"><span class="tag">TV1 EDR</span><span class="tag">Parser Dev</span><span class="tag">Schema Mapping</span></div></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="skills">
-      <div class="container">
-        <div class="section-label reveal">Toolkit</div>
-        <h2 class="section-title reveal reveal-delay-1">Skills</h2>
-        <div class="skills-container">
-          <div class="skill-row reveal reveal-delay-1"><div class="skill-category">SIEM / SOAR</div><div class="skill-items"><span class="skill-tag">FortiSIEM</span><span class="skill-tag">FortiSOAR</span><span class="skill-tag">IBM QRadar</span><span class="skill-tag">Splunk</span><span class="skill-tag">Correlation Rules</span><span class="skill-tag">Custom Parsers</span></div></div>
-          <div class="skill-row reveal reveal-delay-2"><div class="skill-category">Blue Team</div><div class="skill-items"><span class="skill-tag">Threat Hunting</span><span class="skill-tag">Incident Response</span><span class="skill-tag">Digital Forensics</span><span class="skill-tag">Malware Analysis (Basic)</span><span class="skill-tag">Log Analysis</span><span class="skill-tag">Alert Triage</span></div></div>
-          <div class="skill-row reveal reveal-delay-3"><div class="skill-category">Frameworks</div><div class="skill-items"><span class="skill-tag">MITRE ATT&amp;CK</span><span class="skill-tag">Cyber Kill Chain</span><span class="skill-tag">NIST CSF</span><span class="skill-tag">OWASP Top 10</span></div></div>
-          <div class="skill-row reveal reveal-delay-4"><div class="skill-category">Network</div><div class="skill-items"><span class="skill-tag">Wireshark</span><span class="skill-tag">Packet Analysis</span><span class="skill-tag">TCP/IP</span><span class="skill-tag">DNS / DHCP</span><span class="skill-tag">Firewall Logs</span><span class="skill-tag">FortiGate</span></div></div>
-          <div class="skill-row reveal reveal-delay-5"><div class="skill-category">Endpoint</div><div class="skill-items"><span class="skill-tag">Windows Event Logs</span><span class="skill-tag">Active Directory</span><span class="skill-tag">Trend Vision One</span><span class="skill-tag">Sysmon</span><span class="skill-tag">PowerShell Logging</span></div></div>
-          <div class="skill-row reveal reveal-delay-5"><div class="skill-category">Technical</div><div class="skill-items"><span class="skill-tag">Python</span><span class="skill-tag">Linux</span><span class="skill-tag">Regex</span><span class="skill-tag">Bash Scripting</span><span class="skill-tag">SQL</span><span class="skill-tag">REST APIs</span></div></div>
-          <div class="skill-row reveal reveal-delay-5"><div class="skill-category">Intel / OSINT</div><div class="skill-items"><span class="skill-tag">AbuseIPDB</span><span class="skill-tag">VirusTotal</span><span class="skill-tag">Shodan</span><span class="skill-tag">OSINT Techniques</span><span class="skill-tag">IOC Management</span></div></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="certs">
-      <div class="container">
-        <div class="section-label reveal">Credentials</div>
-        <h2 class="section-title reveal reveal-delay-1">Certifications</h2>
-        <div class="certs-grid">
-          <div class="cert-card reveal reveal-delay-1"><div class="cert-badge">FCA</div><div><h3>Fortinet Certified Associate in Cybersecurity</h3><p>Issued Jul 2025 &#8226; Expires Jul 2027 &#8226; ID: 2072677544MP</p></div></div>
-          <div class="cert-card reveal reveal-delay-2"><div class="cert-badge">NSE1</div><div><h3>NSE Level 1: Certified Associate</h3><p>Issued Jul 2025 &#8226; Fortinet Network Security Expert Program</p></div></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="contact">
-      <div class="container">
-        <div class="section-label reveal">Connect</div>
-        <h2 class="section-title reveal reveal-delay-1">Get in Touch</h2>
-        <div class="contact-grid">
-          <div class="contact-links reveal reveal-delay-2">
-            <a href="mailto:maheshbabu.soc7@gmail.com" class="contact-link"><span class="icon">&#9993;</span> maheshbabu.soc7@gmail.com</a>
-            <a href="tel:+917670866926" class="contact-link"><span class="icon">&#128222;</span> +91 7670866926</a>
-            <a href="https://www.linkedin.com/in/mahesh-babu-pentapati-soc" target="_blank" class="contact-link"><span class="icon">&#128279;</span> LinkedIn</a>
-            <a href="https://github.com/maheshpentapati" target="_blank" class="contact-link"><span class="icon">&#128187;</span> GitHub</a>
-          </div>
-          <form class="contact-form reveal reveal-delay-3" id="contactForm">
-            <div class="form-group"><label>Name</label><input name="name" required placeholder="Your name" /></div>
-            <div class="form-group"><label>Email</label><input name="email" type="email" required placeholder="your@email.com" /></div>
-            <div class="form-group"><label>Message</label><textarea name="message" required placeholder="How can I help?"></textarea></div>
-            <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">Send Message &#8594;</button>
-          </form>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="footer-inner">
-      <span>&#169; <span id="year"></span> Mahesh Babu Pentapati</span>
-      <div class="footer-links">
-        <a href="https://www.linkedin.com/in/mahesh-babu-pentapati-soc" target="_blank">LinkedIn</a>
-        <a href="https://github.com/maheshpentapati" target="_blank">GitHub</a>
-        <a href="assets/resume.pdf" download>R&#233;sum&#233;</a>
-      </div>
+  <!-- FOCUS -->
+  <section id="cyber"><div class="container">
+    <div class="s-label reveal">Focus Areas</div>
+    <h2 class="s-title reveal rd1">Cyber Focus</h2>
+    <div class="focus-grid">
+      <div class="focus-card reveal rd1 spotlight"><div class="focus-icon">&#9889;</div><h3>Detection Engineering</h3><p>Author high-fidelity correlation rules, custom parsers, and regex-based detection logic in FortiSIEM &amp; QRadar. Focus on minimizing false positives through aggregation windows, threshold tuning, and anti-evasion patterns aligned to MITRE ATT&amp;CK TTPs.</p><div class="tags"><span class="tag">ATT&amp;CK TTPs</span><span class="tag">Noise Control</span><span class="tag">Correlation Rules</span><span class="tag">Parser Dev</span></div></div>
+      <div class="focus-card reveal rd2 spotlight"><div class="focus-icon">&#128293;</div><h3>Incident Response &amp; Triage</h3><p>First-responder triage across L1/L2/L3 escalation workflows. Rapid scoping through process trees, network pivots, and identity correlation. Execute structured playbooks for phishing, ransomware, brute-force, and lateral movement scenarios.</p><div class="tags"><span class="tag">Triage</span><span class="tag">Containment</span><span class="tag">IR Playbooks</span><span class="tag">RCA</span></div></div>
+      <div class="focus-card reveal rd3 spotlight"><div class="focus-icon">&#128269;</div><h3>Cyber Threat Hunting</h3><p>Hypothesis-driven hunts across endpoint, network, and identity telemetry. Proactive searches for persistence mechanisms, C2 beaconing, credential abuse, and living-off-the-land techniques using FortiSIEM queries and log deep-dives.</p><div class="tags"><span class="tag">IOC Sweeps</span><span class="tag">Behavioral Analysis</span><span class="tag">LOLBins</span></div></div>
+      <div class="focus-card reveal rd1 spotlight"><div class="focus-icon">&#127919;</div><h3>Adversary Emulation</h3><p>Safe attack simulations to validate detection coverage &#8212; PowerShell download cradles, PsExec lateral movement, MSHTA abuse, Ngrok tunneling, and credential dumping scenarios mapped to ATT&amp;CK techniques.</p><div class="tags"><span class="tag">Atomic Red Team</span><span class="tag">Caldera</span><span class="tag">Purple Teaming</span></div></div>
+      <div class="focus-card reveal rd2 spotlight"><div class="focus-icon">&#128202;</div><h3>SIEM / SOAR Engineering</h3><p>End-to-end FortiSIEM deployments &#8212; log source onboarding, event normalization, custom data models, and executive dashboards. FortiSOAR playbook development for automated enrichment, ticketing, and response orchestration.</p><div class="tags"><span class="tag">FortiSIEM</span><span class="tag">FortiSOAR</span><span class="tag">Dashboards</span><span class="tag">Automation</span></div></div>
+      <div class="focus-card reveal rd3 spotlight"><div class="focus-icon">&#129504;</div><h3>Threat Intel &amp; Enrichment</h3><p>Automated IOC enrichment pipelines using AbuseIPDB, VirusTotal, and OSINT feeds. Risk scoring integration into SIEM alerts for context-aware triage and faster analyst decision-making.</p><div class="tags"><span class="tag">AbuseIPDB</span><span class="tag">VirusTotal</span><span class="tag">OSINT</span><span class="tag">Risk Scoring</span></div></div>
+      <div class="focus-card reveal rd1 spotlight"><div class="focus-icon">&#128300;</div><h3>Digital Forensics</h3><p>Post-incident artifact collection and evidence preservation. Windows event log analysis, memory forensics basics, timeline reconstruction, and chain-of-custody documentation for IR investigations.</p><div class="tags"><span class="tag">Log Analysis</span><span class="tag">Timeline</span><span class="tag">Evidence</span><span class="tag">Artifacts</span></div></div>
+      <div class="focus-card reveal rd2 spotlight"><div class="focus-icon">&#128737;</div><h3>Log Source Integration</h3><p>Onboard and normalize diverse log sources &#8212; firewalls, WAF, AD/LDAP, Windows Event Logs, EDR (Trend Vision One), cloud services, and network devices into unified SIEM schemas for cross-source correlation.</p><div class="tags"><span class="tag">Syslog</span><span class="tag">WMI/WEC</span><span class="tag">API Pulls</span><span class="tag">Normalization</span></div></div>
+      <div class="focus-card reveal rd3 spotlight"><div class="focus-icon">&#128203;</div><h3>Compliance &amp; Reporting</h3><p>RBI advisory compliance documentation for banking clients. Evidence-ready summaries, CERT-In incident reporting, retention posture audits, and periodic security review reports for BFSI organizations.</p><div class="tags"><span class="tag">RBI</span><span class="tag">CERT-In</span><span class="tag">BFSI Audits</span><span class="tag">MIS Reports</span></div></div>
     </div>
-  </footer>
+  </div></section>
 
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
+  <!-- EXPERIENCE -->
+  <section id="experience"><div class="container">
+    <div class="s-label reveal">Career</div>
+    <h2 class="s-title reveal rd1">Experience</h2>
+    <div class="timeline">
+      <div class="tl-item current reveal rd1"><div class="tl-dot"></div><div class="tl-card">
+        <div class="tl-head"><h3>Senior SOC Analyst &#8212; TechOwl InfoSec Pvt. Ltd. <span class="level l3">L3</span></h3><span class="tl-date">Jun 2025 &#8212; Present</span></div>
+        <div class="tl-loc">Surat, Gujarat, India &#8226; On-site &#8226; CERT-In Empanelled MSSP &#8226; Expert Fortinet Partner</div>
+        <ul>
+          <li>Lead detection engineering, threat hunting, and incident response operations across a 24x7 multi-tenant SOC serving 120+ client organizations</li>
+          <li>Engineer FortiSIEM correlation rules, custom parsers, and regex-based detection logic &#8212; tuning for fidelity and minimizing false positives</li>
+          <li>Develop FortiSOAR playbooks for automated incident enrichment, threat intel lookups (AbuseIPDB, VirusTotal), ITSM ticketing, and response orchestration</li>
+          <li>Conduct proactive threat hunts across endpoint, firewall, and AD logs &#8212; hunting for persistence, C2 beaconing, credential abuse, and lateral movement</li>
+          <li>Onboard and normalize diverse log sources &#8212; FortiGate, Windows Event Logs, Active Directory, WAF, EDR (Trend Vision One), and network devices</li>
+          <li>Build executive-level security dashboards, MIS reports, and RBI advisory compliance documentation for banking clients</li>
+          <li>Perform forensic log analysis during post-incident investigations &#8212; timeline reconstruction, artifact collection, and root cause documentation</li>
+          <li>Mentor L1/L2 analysts on triage methodology, escalation workflows, and detection rule development</li>
+        </ul>
+      </div></div>
+      <div class="tl-item reveal rd2"><div class="tl-dot"></div><div class="tl-card">
+        <div class="tl-head"><h3>SOC Analyst &#8212; Mastercard <span class="level l1">L1</span></h3><span class="tl-date">Sep 2022 &#8212; Jun 2025</span></div>
+        <div class="tl-loc">Pune, Maharashtra, India &#8226; Global SOC Operations</div>
+        <ul>
+          <li>Monitored global infrastructure using IBM QRadar SIEM &#8212; triaging alerts across network, endpoint, and identity event sources</li>
+          <li>Tuned correlation rules and offense management to reduce false positive rates and improve SOC analyst efficiency</li>
+          <li>Investigated phishing campaigns, brute-force attacks, suspicious authentication patterns, and policy violations across enterprise environments</li>
+          <li>Participated in global SOC threat hunting exercises &#8212; proactive searches for APT indicators, anomalous DNS patterns, and unauthorized lateral movement</li>
+          <li>Performed packet-level analysis using Wireshark for deep-dive network investigations during incident response</li>
+          <li>Collaborated with IR teams on structured incident response procedures &#8212; scoping, containment, eradication, and post-incident reporting</li>
+          <li>Documented detection gaps and proposed new use cases aligned to MITRE ATT&amp;CK framework for continuous coverage improvement</li>
+        </ul>
+      </div></div>
+    </div>
+  </div></section>
 
-    // Contact form
-    document.getElementById('contactForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      var fd = new FormData(this);
-      var n = fd.get('name'), em = fd.get('email'), msg = fd.get('message');
-      location.href = 'mailto:maheshbabu.soc7@gmail.com?subject=Portfolio%20contact%20from%20' + encodeURIComponent(n || '') + '&body=' + encodeURIComponent(msg || '') + '%0A%0AFrom:%20' + encodeURIComponent(em || '');
+  <!-- PROJECTS -->
+  <section id="projects"><div class="container">
+    <div class="s-label reveal">Work</div>
+    <h2 class="s-title reveal rd1">Selected Projects</h2>
+    <div class="proj-grid">
+      <div class="proj-card reveal rd1 spotlight"><span class="proj-num">01</span><h3>SQL Injection Detection Suite</h3><p>Multi-layered regex detection for time-based blind, boolean-based, UNION-based, and obfuscated SQLi payloads. Includes aggregation windows for burst detection, noise suppression for scanners, and ATT&amp;CK T1190 mapping.</p><div class="tags"><span class="tag">FortiSIEM</span><span class="tag">Regex</span><span class="tag">WAF Logs</span><span class="tag">ATT&amp;CK</span></div></div>
+      <div class="proj-card reveal rd2 spotlight"><span class="proj-num">02</span><h3>Windows DNS Exfiltration Hunt</h3><p>Correlation of DNS query/response pairs (Event IDs 256/257/260/261) to detect pointer loops, NXDOMAIN bursts, high-entropy subdomain queries, and potential data exfiltration via DNS tunneling.</p><div class="tags"><span class="tag">Threat Hunting</span><span class="tag">DNS Analytics</span><span class="tag">Exfiltration</span></div></div>
+      <div class="proj-card reveal rd3 spotlight"><span class="proj-num">03</span><h3>Credential Abuse &amp; Brute-Force Detection</h3><p>Detection rules for distributed brute-force, password spraying, impossible travel, and credential stuffing across AD/LDAP and VPN logs. Threshold-based alerting with account lockout correlation.</p><div class="tags"><span class="tag">Active Directory</span><span class="tag">T1110</span><span class="tag">FortiSIEM</span></div></div>
+      <div class="proj-card reveal rd1 spotlight"><span class="proj-num">04</span><h3>FortiSOAR IR Playbook Automation</h3><p>End-to-end incident response playbooks &#8212; auto-enrichment via AbuseIPDB/VT, dynamic severity assignment, ITSM ticket creation, analyst notification, and SLA tracking for BFSI SOC operations.</p><div class="tags"><span class="tag">FortiSOAR</span><span class="tag">Automation</span><span class="tag">ITSM</span><span class="tag">Playbooks</span></div></div>
+      <div class="proj-card reveal rd2 spotlight"><span class="proj-num">05</span><h3>Ransomware Forensic Investigation</h3><p>Post-incident forensic analysis &#8212; Windows Event Log deep-dive, lateral movement timeline reconstruction, persistence mechanism identification, IOC extraction, and CERT-In reporting for affected banking client.</p><div class="tags"><span class="tag">Forensics</span><span class="tag">Timeline</span><span class="tag">IOC Extraction</span><span class="tag">CERT-In</span></div></div>
+      <div class="proj-card reveal rd3 spotlight"><span class="proj-num">06</span><h3>Trend Vision One Telemetry Normalization</h3><p>Unified SIEM schema mapping for Trend Vision One EDR telemetry &#8212; field normalization, event categorization, and custom dashboards for endpoint visibility across multi-tenant FortiSIEM deployments.</p><div class="tags"><span class="tag">TV1 EDR</span><span class="tag">Parser Dev</span><span class="tag">Schema Mapping</span></div></div>
+    </div>
+  </div></section>
+
+  <!-- SKILLS -->
+  <section id="skills"><div class="container">
+    <div class="s-label reveal">Toolkit</div>
+    <h2 class="s-title reveal rd1">Skills</h2>
+    <div class="skills-wrap">
+      <div class="sk-row reveal rd1"><div class="sk-cat">SIEM / SOAR</div><div class="sk-items"><span class="sk-tag">FortiSIEM</span><span class="sk-tag">FortiSOAR</span><span class="sk-tag">IBM QRadar</span><span class="sk-tag">Splunk</span><span class="sk-tag">Correlation Rules</span><span class="sk-tag">Custom Parsers</span></div></div>
+      <div class="sk-row reveal rd2"><div class="sk-cat">Blue Team</div><div class="sk-items"><span class="sk-tag">Threat Hunting</span><span class="sk-tag">Incident Response</span><span class="sk-tag">Digital Forensics</span><span class="sk-tag">Malware Analysis</span><span class="sk-tag">Log Analysis</span><span class="sk-tag">Alert Triage</span></div></div>
+      <div class="sk-row reveal rd3"><div class="sk-cat">Frameworks</div><div class="sk-items"><span class="sk-tag">MITRE ATT&amp;CK</span><span class="sk-tag">Cyber Kill Chain</span><span class="sk-tag">NIST CSF</span><span class="sk-tag">OWASP Top 10</span></div></div>
+      <div class="sk-row reveal rd4"><div class="sk-cat">Network</div><div class="sk-items"><span class="sk-tag">Wireshark</span><span class="sk-tag">Packet Analysis</span><span class="sk-tag">TCP/IP</span><span class="sk-tag">DNS / DHCP</span><span class="sk-tag">Firewall Logs</span><span class="sk-tag">FortiGate</span></div></div>
+      <div class="sk-row reveal rd5"><div class="sk-cat">Endpoint</div><div class="sk-items"><span class="sk-tag">Windows Event Logs</span><span class="sk-tag">Active Directory</span><span class="sk-tag">Trend Vision One</span><span class="sk-tag">Sysmon</span><span class="sk-tag">PowerShell Logging</span></div></div>
+      <div class="sk-row reveal"><div class="sk-cat">Technical</div><div class="sk-items"><span class="sk-tag">Python</span><span class="sk-tag">Linux</span><span class="sk-tag">Regex</span><span class="sk-tag">Bash Scripting</span><span class="sk-tag">SQL</span><span class="sk-tag">REST APIs</span></div></div>
+      <div class="sk-row reveal"><div class="sk-cat">Intel / OSINT</div><div class="sk-items"><span class="sk-tag">AbuseIPDB</span><span class="sk-tag">VirusTotal</span><span class="sk-tag">Shodan</span><span class="sk-tag">OSINT Techniques</span><span class="sk-tag">IOC Management</span></div></div>
+    </div>
+  </div></section>
+
+  <!-- CERTS -->
+  <section id="certs"><div class="container">
+    <div class="s-label reveal">Credentials</div>
+    <h2 class="s-title reveal rd1">Certifications</h2>
+    <div class="certs-grid">
+      <div class="cert-card reveal rd1"><div class="cert-badge">FCA</div><div><h3>Fortinet Certified Associate in Cybersecurity</h3><p>Issued Jul 2025 &#8226; Expires Jul 2027 &#8226; ID: 2072677544MP</p></div></div>
+      <div class="cert-card reveal rd2"><div class="cert-badge">NSE1</div><div><h3>NSE Level 1: Certified Associate</h3><p>Issued Jul 2025 &#8226; Fortinet Network Security Expert Program</p></div></div>
+    </div>
+  </div></section>
+
+  <!-- WRITEUPS -->
+  <section id="blog"><div class="container">
+    <div class="s-label reveal">Writing</div>
+    <h2 class="s-title reveal rd1">Writeups &amp; Research</h2>
+    <div class="blog-list">
+      <div class="blog-item reveal rd1"><div class="blog-year">2025</div><div class="blog-body"><h3>Detecting DNS Exfiltration via Windows Event Log Correlation <span class="arrow">&#8599;</span></h3><p>Deep-dive into using Windows DNS Server Event IDs 256/257/260/261 to detect C2 channels, data exfiltration tunnels, and DGA-based beaconing in enterprise environments.</p><div class="tags"><span class="tag">Threat Hunting</span><span class="tag">DNS</span><span class="tag">FortiSIEM</span></div></div></div>
+      <div class="blog-item reveal rd2"><div class="blog-year">2025</div><div class="blog-body"><h3>Building Anti-Evasion SQL Injection Detection Rules <span class="arrow">&#8599;</span></h3><p>How to layer regex-based detection for time-based blind, UNION, and obfuscated SQLi payloads with aggregation windows that catch real attacks while suppressing scanner noise.</p><div class="tags"><span class="tag">Detection Engineering</span><span class="tag">Regex</span><span class="tag">WAF</span></div></div></div>
+      <div class="blog-item reveal rd3"><div class="blog-year">2024</div><div class="blog-body"><h3>Credential Abuse Detection at Scale: Lessons from BFSI SOC <span class="arrow">&#8599;</span></h3><p>Practical approaches to detecting distributed brute-force, password spraying, and impossible travel across Active Directory and VPN logs in multi-tenant SIEM environments.</p><div class="tags"><span class="tag">Active Directory</span><span class="tag">BFSI</span><span class="tag">MITRE T1110</span></div></div></div>
+      <div class="blog-item reveal rd4"><div class="blog-year">2024</div><div class="blog-body"><h3>FortiSOAR Playbook Design: From Alert to Resolution <span class="arrow">&#8599;</span></h3><p>Architecture and design patterns for building end-to-end FortiSOAR incident response playbooks with automated enrichment, dynamic severity assignment, and ITSM integration.</p><div class="tags"><span class="tag">FortiSOAR</span><span class="tag">Automation</span><span class="tag">ITSM</span></div></div></div>
+    </div>
+  </div></section>
+
+  <!-- CONTACT -->
+  <section id="contact"><div class="container">
+    <div class="s-label reveal">Connect</div>
+    <h2 class="s-title reveal rd1">Get in Touch</h2>
+    <div class="contact-grid">
+      <div class="contact-links reveal rd2">
+        <a href="mailto:maheshbabu.soc7@gmail.com" class="contact-link"><span class="icon">&#9993;</span> maheshbabu.soc7@gmail.com</a>
+        <a href="tel:+917670866926" class="contact-link"><span class="icon">&#128222;</span> +91 7670866926</a>
+        <a href="https://www.linkedin.com/in/mahesh-babu-pentapati-soc" target="_blank" class="contact-link"><span class="icon">&#128279;</span> LinkedIn</a>
+        <a href="https://github.com/maheshpentapati" target="_blank" class="contact-link"><span class="icon">&#128187;</span> GitHub</a>
+      </div>
+      <form class="contact-form reveal rd3" id="contactForm">
+        <div class="fg"><label>Name</label><input name="name" required placeholder="Your name"/></div>
+        <div class="fg"><label>Email</label><input name="email" type="email" required placeholder="your@email.com"/></div>
+        <div class="fg"><label>Message</label><textarea name="message" required placeholder="How can I help?"></textarea></div>
+        <button type="submit" class="btn btn-primary magnetic" style="width:100%;justify-content:center">Send Message &#8594;</button>
+      </form>
+    </div>
+  </div></section>
+</main>
+
+<footer><div class="f-inner"><span>&#169; <span id="yr"></span> Mahesh Babu Pentapati</span><div class="f-links"><a href="https://www.linkedin.com/in/mahesh-babu-pentapati-soc" target="_blank">LinkedIn</a><a href="https://github.com/maheshpentapati" target="_blank">GitHub</a><a href="assets/resume.pdf" download>R&#233;sum&#233;</a></div></div></footer>
+
+<script>
+(function(){
+  document.getElementById('yr').textContent=new Date().getFullYear();
+
+  // CUSTOM CURSOR
+  var cur=document.getElementById('cursor'),dot=document.getElementById('cursorDot'),cx=0,cy=0,dx=0,dy=0;
+  document.addEventListener('mousemove',function(e){dx=e.clientX;dy=e.clientY;dot.style.left=dx+'px';dot.style.top=dy+'px'});
+  (function mv(){cx+=(dx-cx)*0.12;cy+=(dy-cy)*0.12;cur.style.left=cx+'px';cur.style.top=cy+'px';requestAnimationFrame(mv)})();
+  document.querySelectorAll('a,button,.focus-card,.proj-card,.stat-card,.cert-card,.blog-item,.sk-tag,.contact-link').forEach(function(el){el.addEventListener('mouseenter',function(){cur.classList.add('hover')});el.addEventListener('mouseleave',function(){cur.classList.remove('hover')})});
+
+  // CURSOR GLOW
+  var glow=document.getElementById('cursorGlow'),gOn=false;
+  document.addEventListener('mousemove',function(e){if(!gOn){glow.classList.add('on');gOn=true}glow.style.left=e.clientX+'px';glow.style.top=e.clientY+'px'});
+  document.addEventListener('mouseleave',function(){glow.classList.remove('on');gOn=false});
+
+  // MAGNETIC BUTTONS
+  document.querySelectorAll('.magnetic').forEach(function(btn){
+    btn.addEventListener('mousemove',function(e){
+      var r=btn.getBoundingClientRect(),x=e.clientX-r.left-r.width/2,y=e.clientY-r.top-r.height/2;
+      btn.style.transform='translate('+x*0.2+'px,'+y*0.2+'px)';
+      btn.style.setProperty('--bx',(e.clientX-r.left)+'px');
+      btn.style.setProperty('--by',(e.clientY-r.top)+'px');
     });
+    btn.addEventListener('mouseleave',function(){btn.style.transform=''});
+  });
 
-    // Progress bar
-    var prog = document.getElementById('progress');
-    window.addEventListener('scroll', function() {
-      var s = scrollY, h = document.body.scrollHeight - innerHeight;
-      prog.style.width = Math.max(0, Math.min(1, h ? s / h : 0)) * 100 + '%';
-    }, { passive: true });
+  // TEXT SCRAMBLE
+  var chars='!@#$%^&*()_+-=[]{}|;:,.<>?/~0123456789';
+  function scramble(el){var orig=el.getAttribute('data-text'),len=orig.length,iter=0;var iv=setInterval(function(){el.textContent=orig.split('').map(function(c,i){return i<iter?orig[i]:chars[Math.floor(Math.random()*chars.length)]}).join('');iter+=0.5;if(iter>=len)clearInterval(iv)},30)}
+  var scrObs=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){scramble(e.target);scrObs.unobserve(e.target)}})},{threshold:0.5});
+  document.querySelectorAll('.scramble').forEach(function(el){scrObs.observe(el)});
 
-    // Scroll reveal
-    var obs = new IntersectionObserver(function(entries) {
-      entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.08, rootMargin: '0px 0px -50px 0px' });
-    document.querySelectorAll('.reveal').forEach(function(el) { obs.observe(el); });
+  // SCROLL PROGRESS
+  var prog=document.getElementById('progress');
+  window.addEventListener('scroll',function(){var s=scrollY,h=document.body.scrollHeight-innerHeight;prog.style.width=Math.max(0,Math.min(1,h?s/h:0))*100+'%'},{passive:true});
 
-    // Interactive particle network
-    (function() {
-      var canvas = document.getElementById('particleCanvas');
-      var ctx = canvas.getContext('2d');
-      var w, h, particles = [], mouse = { x: -1000, y: -1000 };
-      var COUNT = 70, CONN = 140, MDIST = 200;
+  // SCROLL REVEAL
+  var obs=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)e.target.classList.add('vis')})},{threshold:0.08,rootMargin:'0px 0px -50px 0px'});
+  document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el)});
 
-      function resize() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
-      resize(); window.addEventListener('resize', resize);
-
-      function P() {
-        this.x = Math.random() * w; this.y = Math.random() * h;
-        this.vx = (Math.random() - 0.5) * 0.35; this.vy = (Math.random() - 0.5) * 0.35;
-        this.r = Math.random() * 1.5 + 0.5; this.a = Math.random() * 0.3 + 0.1;
-      }
-      P.prototype.update = function() {
-        this.x += this.vx; this.y += this.vy;
-        if (this.x < 0 || this.x > w) this.vx *= -1;
-        if (this.y < 0 || this.y > h) this.vy *= -1;
-        var dx = this.x - mouse.x, dy = this.y - mouse.y, d = Math.sqrt(dx*dx+dy*dy);
-        if (d < MDIST) { var f = (MDIST-d)/MDIST*0.015; this.vx += dx/d*f; this.vy += dy/d*f; }
-        this.vx *= 0.999; this.vy *= 0.999;
-      };
-      P.prototype.draw = function() {
-        ctx.beginPath(); ctx.arc(this.x, this.y, this.r, 0, Math.PI*2);
-        ctx.fillStyle = 'rgba(74,240,192,' + this.a + ')'; ctx.fill();
-      };
-
-      for (var i = 0; i < COUNT; i++) particles.push(new P());
-
-      function animate() {
-        ctx.clearRect(0, 0, w, h);
-        var i, j, dx, dy, d, a;
-        for (i = 0; i < particles.length; i++) { particles[i].update(); particles[i].draw(); }
-        for (i = 0; i < particles.length; i++) {
-          for (j = i+1; j < particles.length; j++) {
-            dx = particles[i].x - particles[j].x; dy = particles[i].y - particles[j].y;
-            d = Math.sqrt(dx*dx+dy*dy);
-            if (d < CONN) {
-              a = (1 - d/CONN) * 0.07;
-              ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(particles[j].x, particles[j].y);
-              ctx.strokeStyle = 'rgba(74,240,192,' + a + ')'; ctx.lineWidth = 0.5; ctx.stroke();
-            }
-          }
-          dx = particles[i].x - mouse.x; dy = particles[i].y - mouse.y; d = Math.sqrt(dx*dx+dy*dy);
-          if (d < MDIST) {
-            a = (1 - d/MDIST) * 0.12;
-            ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(mouse.x, mouse.y);
-            ctx.strokeStyle = 'rgba(91,141,248,' + a + ')'; ctx.lineWidth = 0.6; ctx.stroke();
-          }
-        }
-        requestAnimationFrame(animate);
-      }
-      animate();
-      document.addEventListener('mousemove', function(e) { mouse.x = e.clientX; mouse.y = e.clientY; });
-    })();
-
-    // Cursor glow
-    (function() {
-      var g = document.getElementById('cursorGlow'), on = false;
-      document.addEventListener('mousemove', function(e) {
-        if (!on) { g.classList.add('active'); on = true; }
-        g.style.left = e.clientX + 'px'; g.style.top = e.clientY + 'px';
+  // STAT COUNTERS
+  var counted=false;
+  var sObs=new IntersectionObserver(function(es){es.forEach(function(e){
+    if(e.isIntersecting&&!counted){counted=true;
+      document.querySelectorAll('.stat-num[data-target]').forEach(function(el){
+        var t=parseInt(el.getAttribute('data-target')),st=null;
+        function a(ts){if(!st)st=ts;var p=Math.min((ts-st)/1800,1),v=1-Math.pow(1-p,3);el.textContent=Math.floor(v*t)+(p<1?'':'+');if(p<1)requestAnimationFrame(a)}
+        requestAnimationFrame(a);
       });
-      document.addEventListener('mouseleave', function() { g.classList.remove('active'); on = false; });
-    })();
+    }
+  })},{threshold:0.3});
+  document.querySelectorAll('.stats-strip').forEach(function(el){sObs.observe(el)});
 
-    // Card spotlight
-    document.querySelectorAll('.focus-card, .project-card').forEach(function(c) {
-      c.addEventListener('mousemove', function(e) {
-        var r = c.getBoundingClientRect();
-        c.style.setProperty('--mx', (e.clientX - r.left) + 'px');
-        c.style.setProperty('--my', (e.clientY - r.top) + 'px');
-      });
-    });
+  // CARD SPOTLIGHT
+  document.querySelectorAll('.spotlight').forEach(function(c){
+    c.addEventListener('mousemove',function(e){var r=c.getBoundingClientRect();c.style.setProperty('--mx',(e.clientX-r.left)+'px');c.style.setProperty('--my',(e.clientY-r.top)+'px')});
+  });
 
-    // Terminal typing
-    (function() {
-      var lines = document.querySelectorAll('.terminal-stats .line');
-      lines.forEach(function(l, i) {
-        l.style.opacity = '0';
-        setTimeout(function() { l.style.opacity = '1'; l.style.transition = 'opacity 0.35s ease'; }, 1800 + i*350);
-      });
-    })();
+  // PARTICLE NETWORK
+  var cv=document.getElementById('particleCanvas'),ctx=cv.getContext('2d'),w,h,pts=[],mouse={x:-1e3,y:-1e3},N=70,CONN=140,MD=200;
+  function resize(){w=cv.width=innerWidth;h=cv.height=innerHeight}resize();window.addEventListener('resize',resize);
+  function Pt(){this.x=Math.random()*w;this.y=Math.random()*h;this.vx=(Math.random()-0.5)*0.35;this.vy=(Math.random()-0.5)*0.35;this.r=Math.random()*1.5+0.5;this.a=Math.random()*0.3+0.1}
+  Pt.prototype.update=function(){this.x+=this.vx;this.y+=this.vy;if(this.x<0||this.x>w)this.vx*=-1;if(this.y<0||this.y>h)this.vy*=-1;var ddx=this.x-mouse.x,ddy=this.y-mouse.y,d=Math.sqrt(ddx*ddx+ddy*ddy);if(d<MD){var f=(MD-d)/MD*0.015;this.vx+=ddx/d*f;this.vy+=ddy/d*f}this.vx*=0.999;this.vy*=0.999};
+  Pt.prototype.draw=function(){ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);ctx.fillStyle='rgba(74,240,192,'+this.a+')';ctx.fill()};
+  for(var i=0;i<N;i++)pts.push(new Pt());
+  (function anim(){
+    ctx.clearRect(0,0,w,h);
+    for(var i=0;i<pts.length;i++){pts[i].update();pts[i].draw()}
+    for(i=0;i<pts.length;i++){
+      for(var j=i+1;j<pts.length;j++){var ddx=pts[i].x-pts[j].x,ddy=pts[i].y-pts[j].y,d=Math.sqrt(ddx*ddx+ddy*ddy);if(d<CONN){var a=(1-d/CONN)*0.07;ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.strokeStyle='rgba(74,240,192,'+a+')';ctx.lineWidth=0.5;ctx.stroke()}}
+      ddx=pts[i].x-mouse.x;ddy=pts[i].y-mouse.y;d=Math.sqrt(ddx*ddx+ddy*ddy);if(d<MD){a=(1-d/MD)*0.12;ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(mouse.x,mouse.y);ctx.strokeStyle='rgba(91,141,248,'+a+')';ctx.lineWidth=0.6;ctx.stroke()}
+    }
+    requestAnimationFrame(anim);
+  })();
+  document.addEventListener('mousemove',function(e){mouse.x=e.clientX;mouse.y=e.clientY});
 
-    // Active nav
-    var secs = document.querySelectorAll('section[id]');
-    var navs = document.querySelectorAll('nav a');
-    window.addEventListener('scroll', function() {
-      var cur = '';
-      secs.forEach(function(s) { if (scrollY >= s.offsetTop - 200) cur = s.getAttribute('id'); });
-      navs.forEach(function(a) { a.classList.toggle('active', a.getAttribute('href') === '#' + cur); });
-    }, { passive: true });
+  // TERMINAL TYPING
+  document.querySelectorAll('.terminal-stats .t-line').forEach(function(l,i){l.style.opacity='0';setTimeout(function(){l.style.opacity='1';l.style.transition='opacity 0.35s ease'},1800+i*350)});
 
-    // Mobile menu
-    document.getElementById('mobileMenuBtn').addEventListener('click', function() {
-      var n = document.querySelector('nav');
-      if (n.style.display === 'flex') { n.style.display = 'none'; }
-      else { n.style.display='flex'; n.style.flexDirection='column'; n.style.position='absolute'; n.style.top='58px'; n.style.right='24px'; n.style.background='rgba(6,8,13,0.95)'; n.style.border='1px solid rgba(255,255,255,0.05)'; n.style.borderRadius='12px'; n.style.padding='8px'; n.style.backdropFilter='blur(24px)'; n.style.zIndex='60'; }
-    });
+  // ACTIVE NAV
+  var secs=document.querySelectorAll('section[id]'),navs=document.querySelectorAll('nav a');
+  window.addEventListener('scroll',function(){var c='';secs.forEach(function(s){if(scrollY>=s.offsetTop-200)c=s.getAttribute('id')});navs.forEach(function(a){a.classList.toggle('active',a.getAttribute('href')==='#'+c)})},{passive:true});
 
-    // Smooth scroll
-    document.querySelectorAll('a[href^="#"]').forEach(function(a) {
-      a.addEventListener('click', function(e) {
-        var t = document.querySelector(a.getAttribute('href'));
-        if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); if (window.innerWidth <= 900) document.querySelector('nav').style.display = 'none'; }
-      });
-    });
-  </script>
+  // MOBILE MENU
+  document.getElementById('mobBtn').addEventListener('click',function(){var n=document.getElementById('mainNav');if(n.style.display==='flex'){n.style.display='none'}else{n.style.display='flex';n.style.flexDirection='column';n.style.position='absolute';n.style.top='58px';n.style.right='24px';n.style.background='rgba(6,8,13,0.95)';n.style.border='1px solid rgba(255,255,255,0.05)';n.style.borderRadius='12px';n.style.padding='8px';n.style.backdropFilter='blur(24px)';n.style.zIndex='60'}});
+
+  // SMOOTH SCROLL
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();var t=document.querySelector(this.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'})})});
+
+  // CONTACT FORM
+  document.getElementById('contactForm').addEventListener('submit',function(e){e.preventDefault();var fd=new FormData(this);location.href='mailto:maheshbabu.soc7@gmail.com?subject=Portfolio%20contact%20from%20'+encodeURIComponent(fd.get('name')||'')+'&body='+encodeURIComponent(fd.get('message')||'')+'%0A%0AFrom:%20'+encodeURIComponent(fd.get('email')||'')});
+})();
+</script>
 </body>
 </html>
